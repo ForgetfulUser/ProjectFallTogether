@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
     public MySceneManager MySceneManager;
     public PlayerManager PlayerManager;
+    public CameraManager CameraManager;
     // public HazardManager HazardManager;
     public GameHUDManager GameHUDManager;
 
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
     {
         startMinutes = Minutes;
         startSeconds = Seconds;
+        Instance = this;
         //HazardManager.WakeUpManager();
     }
 
@@ -85,6 +88,8 @@ public class GameManager : MonoBehaviour
             isGameRunning = false;
             GameOver();
         }
+
+        CameraManager.UpdateCamera();
     }
 
     protected virtual void FixedUpdate()
