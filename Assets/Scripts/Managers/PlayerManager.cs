@@ -88,6 +88,7 @@ public class PlayerManager : MonoBehaviour
         foreach(KeyValuePair<int, PlayerInput> pInputs in PlayerInputs)
         {
             Player player = pInputs.Value.GetComponent<Player>();
+            player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
             Vector3 spawnPos = PlayerSpawnPosition[index];
             spawnPos.y += 0.5f;
             player.transform.position = spawnPos;

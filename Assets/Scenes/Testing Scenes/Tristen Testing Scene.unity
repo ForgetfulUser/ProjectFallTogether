@@ -634,7 +634,7 @@ RectTransform:
   m_Children:
   - {fileID: 1176223090}
   - {fileID: 1048264329}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2109328771}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1486,7 +1486,7 @@ MonoBehaviour:
   Player_PRFB: {fileID: 949842202178973201, guid: 43d9feedeb2fbd44c932b7a071d9e143, type: 3}
   ActivePlayers: []
   InactivePlayers: []
-  MinimumFallHeight: -10
+  MinimumFallHeight: -10000
   TestingPlayer: {fileID: 0}
   lastPlayerStanding: {fileID: 0}
 --- !u!4 &1367501919
@@ -1498,7 +1498,7 @@ Transform:
   m_GameObject: {fileID: 1367501917}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 197, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1869,7 +1869,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 979280257}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2109328772
@@ -1936,7 +1937,6 @@ SceneRoots:
   - {fileID: 1101601896}
   - {fileID: 778995885}
   - {fileID: 2109328771}
-  - {fileID: 979280257}
   - {fileID: 1145609420}
   - {fileID: 1373901629}
   - {fileID: 138260447}

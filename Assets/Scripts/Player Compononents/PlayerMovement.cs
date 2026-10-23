@@ -69,6 +69,12 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Moving by force: " + force);
         rb.MovePosition(transform.position + force);
         //ExtraGravity();
+        if(rb.linearVelocity.y <= -maxFallSpeed)
+        {
+            Vector3 newVel = rb.linearVelocity;
+            newVel.y = -maxFallSpeed;
+            rb.linearVelocity = newVel;
+        }
     }
 
     public void ApplyForce(Vector3 force, float stunDuration, ForceMode forceMode)
