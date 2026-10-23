@@ -14,6 +14,11 @@ public class PlayerManager : MonoBehaviour
     private Dictionary<int, int> PlayerIDs = new Dictionary<int, int>(); // Device | Player
     public Player lastPlayerStanding;
 
+    private void Start()
+    {
+        StartManager();
+    }
+
     public void StartManager()
     {
         foreach(var spawnPos in GetComponentsInChildren<Transform>())
