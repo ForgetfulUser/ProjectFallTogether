@@ -21,6 +21,8 @@ public class GameHUDManager : MonoBehaviour
 
     public void UpdateHUD(int minutes, float seconds)
     {
+        Debug.Log("NOT IMPLEMENTED YET");
+        return;
         UpdateTimer(minutes, seconds);
 
         UpdatePlayerHealLives();
@@ -54,6 +56,7 @@ public class GameHUDManager : MonoBehaviour
 
     public void UpdatePreGameTimer(float timer)
     {
+        return;
         if (timer < 0)
         {
             ReadySetGo_IMG.gameObject.SetActive(false);

@@ -1,6 +1,9 @@
+using NUnit.Framework.Constraints;
 using NUnit.Framework.Internal.Commands;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -11,12 +14,12 @@ public class PlayerManager : MonoBehaviour
     public float MinimumFallHeight = -10;
     [Header("Play Test Variables")]
     public Player TestingPlayer;
-    private Dictionary<int, int> PlayerIDs = new Dictionary<int, int>(); // Device | Player
+    private Dictionary<int, PlayerInput> PlayerInputs = new Dictionary<int, PlayerInput>(); // Device | Player
     public Player lastPlayerStanding;
 
     private void Start()
     {
-        StartManager();
+        //StartManager();
     }
 
     public void StartManager()
@@ -24,11 +27,12 @@ public class PlayerManager : MonoBehaviour
         foreach(var spawnPos in GetComponentsInChildren<Transform>())
         {
             if (spawnPos == transform) continue;
+            Debug.Log(spawnPos.name);
             PlayerSpawnPosition.Add(spawnPos.position);
-            Destroy(spawnPos.gameObject);
+            //Destroy(spawnPos.gameObject);
         }
-        PlayerIDs = MySceneManager.Instance.playerIDs;
-        SpawnPlayers();
+        PlayerInputs = MySceneManager.Instance.playerInputs;
+        SetPlayers();
         if (TestingPlayer) 
             Player_PRFB.StartPlayer(0);
     }
@@ -76,18 +80,23 @@ public class PlayerManager : MonoBehaviour
             RespawnPlayer(player);
         }
     }
-
-    private void SpawnPlayers()
+    
+    private void SetPlayers()
     {
         if (TestingPlayer) return;
-        for(int i = 0; i < PlayerIDs.Count ; i++)
+        int index = 0;
+        foreach(KeyValuePair<int, PlayerInput> pInputs in PlayerInputs)
         {
-            Player player = Instantiate(Player_PRFB, PlayerSpawnPosition[i], Quaternion.identity);
-            player.StartPlayer(i);
+            Player player = pInputs.Value.GetComponent<Player>();
+            Vector3 spawnPos = PlayerSpawnPosition[index];
+            spawnPos.y += 0.5f;
+            player.transform.position = spawnPos;
+            player.StartPlayer(pInputs.Key);
             ActivePlayers.Add(player);
+            index++;
         }
     }
-
+    
     public void RespawnPlayer(Player player)
     {
         if (player.IsActive == false) return;
@@ -101,7 +110,7 @@ public class PlayerManager : MonoBehaviour
                 InactivePlayers.Add(player);
         }
 
-        player.transform.position = PlayerSpawnPosition[player.PlayerIndex];
+        player.transform.position = PlayerSpawnPosition[player.PlayerID];
     }
 
     public Player LastPlayerStanding()

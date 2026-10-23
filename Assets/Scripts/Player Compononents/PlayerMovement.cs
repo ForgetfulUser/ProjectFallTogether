@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void UpdateMovement(out Vector2 moveDir, out bool isJumping, out bool isPunching)
     {
-        GroundCheck();
+        //GroundCheck();
 
         moveDir = this.moveDir;
         isJumping = false;
@@ -66,8 +66,9 @@ public class PlayerMovement : MonoBehaviour
                 moveDir.y * moveSpeed * Time.deltaTime
             );
         }
+        Debug.Log("Moving by force: " + force);
         rb.MovePosition(transform.position + force);
-        ExtraGravity();
+        //ExtraGravity();
     }
 
     public void ApplyForce(Vector3 force, float stunDuration, ForceMode forceMode)
@@ -107,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
+        Debug.Log("MOVE");
         moveDir = context.ReadValue<Vector2>();
     }
 

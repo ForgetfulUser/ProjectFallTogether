@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         //HazardManager.WakeUpManager();
     }
 
-    protected virtual void Start()
+    public virtual void StartGame()
     {
         PlayerManager.StartManager();
         //HazardManager.StartManager();
@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameOverCoroutine()
     {
         isGameRunning = false;
-        int finalPlayerIndex = PlayerManager.lastPlayerStanding ? PlayerManager.lastPlayerStanding.PlayerIndex : -1;
+        int finalPlayerIndex = PlayerManager.lastPlayerStanding ? PlayerManager.lastPlayerStanding.PlayerID : -1;
         GameHUDManager.GameOver(finalPlayerIndex);
         yield return new WaitForSeconds(0.7f);
         MySceneManager.Instance.LoadNextScene();

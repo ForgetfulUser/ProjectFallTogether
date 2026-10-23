@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class MySceneManager : MonoBehaviour
 {
     public static MySceneManager Instance { get; private set; }
     //public List<int> PlayerIDs = new List<int>();
-    public Dictionary<int, int> playerIDs; // Device | Player ID
+    public Dictionary<int, PlayerInput> playerInputs = new Dictionary<int, PlayerInput>(); // Device | Player Input
     public int sceneIndex;
     bool isLoading = false;
-
+    public GameManager GameManager_PRFB;
     void OnEnable()
     {
         // Subscribe to the event
@@ -56,5 +57,11 @@ public class MySceneManager : MonoBehaviour
         sceneIndex++;
         if (sceneIndex >= SceneManager.sceneCountInBuildSettings) sceneIndex = 0;
         SceneManager.LoadScene(sceneIndex);
+    }
+
+    public void LoadTestingScene()
+    {
+        GameManager_PRFB.gameObject.SetActive(true);
+        GameManager_PRFB.StartGame();
     }
 }

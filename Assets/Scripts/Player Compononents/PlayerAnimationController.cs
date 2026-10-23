@@ -11,6 +11,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void StartAnimation(int playerIndex)
     {
+/*
         GameObject decal = null;
         switch (playerIndex)
         {
@@ -40,10 +41,12 @@ public class PlayerAnimationController : MonoBehaviour
         {
             Debug.LogWarning("Player Index: " + playerIndex + " is out of range.");
         }
+*/
     }
 
     public void UpdateAnimation(Vector2 moveDir, bool isJumping, bool isPunching)
     {
+        return;
         int x = Mathf.RoundToInt(moveDir.x);
         int y = Mathf.RoundToInt(moveDir.y);
         Animator.SetInteger("Horizontal Movement", x);

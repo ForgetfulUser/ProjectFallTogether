@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     //public PlayerCanvasManager PlayerCanvasManager;
 
     [Header("Player Indicator")]
-    public int PlayerIndex = -1;
+    public int PlayerID = -1;
 
     [Header("Stats")]
     public int CurrentLives;
@@ -18,11 +18,11 @@ public class Player : MonoBehaviour
     public Vector3 StartPos;
     public bool IsActive = true;
 
-    public virtual void StartPlayer(int playerIndex)
+    public virtual void StartPlayer(int playerID)
     {
         PlayerMovement.StartMovement();
-        PlayerIndex = playerIndex;
-        PlayerAnimationController.StartAnimation(PlayerIndex);
+        PlayerID = playerID;
+        PlayerAnimationController.StartAnimation(PlayerID);
         StartPos = transform.localPosition;
     }
 
