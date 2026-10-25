@@ -27,7 +27,6 @@ public class PlayerManager : MonoBehaviour
         foreach(var spawnPos in GetComponentsInChildren<Transform>())
         {
             if (spawnPos == transform) continue;
-            Debug.Log(spawnPos.name);
             PlayerSpawnPosition.Add(spawnPos.position);
             //Destroy(spawnPos.gameObject);
         }
@@ -124,5 +123,18 @@ public class PlayerManager : MonoBehaviour
             lastPlayerStanding = player;
         }
         return lastPlayerStanding;
+    }
+
+    public void ResetManager()
+    {
+        int index = 0;
+        foreach (Player player in ActivePlayers)
+        {
+            player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            Vector3 spawnPos = PlayerSpawnPosition[index];
+            spawnPos.y += 0.5f;
+            player.transform.position = spawnPos;
+            index++;
+        }
     }
 }

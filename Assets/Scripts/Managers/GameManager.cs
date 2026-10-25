@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public MySceneManager MySceneManager;
     public PlayerManager PlayerManager;
     public CameraManager CameraManager;
-    // public HazardManager HazardManager;
+    public VirusManager VirusManager;
     public GameHUDManager GameHUDManager;
 
     public int Minutes;
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     public virtual void StartGame()
     {
         PlayerManager.StartManager();
-        //HazardManager.StartManager();
+        VirusManager.StartManager();
         GameHUDManager.StartHUD(PlayerManager.ActivePlayers);
 
         if (skipPreGame)
@@ -63,11 +63,11 @@ public class GameManager : MonoBehaviour
         if (isGameRunning == false) return;
 
         PlayerManager.UpdateManager();
-        //HazardManager.UpdateManager();
+        VirusManager.UpdateManager();
 
         if (enableDebugReset && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
         {
-            //HazardManager.ResetHazards();
+            VirusManager.ResetVirus();
             Debug.Log("Hazards reset.");
         }
 
@@ -121,8 +121,8 @@ public class GameManager : MonoBehaviour
 
     protected virtual void ResetGame()
     {
-        //PlayerManager.ResetManager();
-        //HazardManager.ResetManager();
+        PlayerManager.ResetManager();
+        VirusManager.ResetVirus();
         Minutes = startMinutes;
         Seconds = startSeconds;
     }

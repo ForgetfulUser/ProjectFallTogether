@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
                 moveDir.y * moveSpeed * Time.deltaTime
             );
         }
-        Debug.Log("Moving by force: " + force);
+
         rb.MovePosition(transform.position + force);
         //ExtraGravity();
         if(rb.linearVelocity.y <= -maxFallSpeed)
@@ -114,7 +114,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        Debug.Log("MOVE");
         moveDir = context.ReadValue<Vector2>();
     }
 

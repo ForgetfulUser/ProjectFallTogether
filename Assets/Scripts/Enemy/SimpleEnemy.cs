@@ -68,7 +68,6 @@ public class SimpleEnemyAI : MonoBehaviour
     private Vector3 startPosition;
     private Quaternion startRotation;
 
-    private float lastAttackTime = -999f;
     private float retargetTimer;
 
     private bool hasStarted;
@@ -76,7 +75,7 @@ public class SimpleEnemyAI : MonoBehaviour
     private bool isAttacking;
     private Coroutine attackRoutine;
 
-    public void StartHazard()
+    public void StartEnemy()
     {
         if (enemyAnimationController == null)
         {
@@ -102,9 +101,8 @@ public class SimpleEnemyAI : MonoBehaviour
         ResetHazard();
     }
 
-    public void UpdateHazard()
+    public void UpdateEnemy()
     {
-        Debug.Log("Upd");
         if (!hasStarted)
         {
             return;
@@ -123,12 +121,6 @@ public class SimpleEnemyAI : MonoBehaviour
         if (isAttacking)
         {
             StopAgent();
-            return;
-        }
-
-        if (useCustomLinkJump && agent.isOnOffMeshLink && !isTraversingLink)
-        {
-            StartCoroutine(TraverseLinkJump());
             return;
         }
 
@@ -245,7 +237,6 @@ public class SimpleEnemyAI : MonoBehaviour
         StopAttackRoutine();
 
         currentState = EnemyState.Idle;
-        lastAttackTime = -999f;
         retargetTimer = 0f;
         target = null;
         isTraversingLink = false;
@@ -364,6 +355,7 @@ public class SimpleEnemyAI : MonoBehaviour
 
     private Transform FindClosestPlayerGlobal()
     {
+        // TODO: Change to using EnemyManger.Players
         GameObject[] players = GameObject.FindGameObjectsWithTag(playerTag);
 
         Transform closestPlayer = null;
@@ -453,63 +445,6 @@ public class SimpleEnemyAI : MonoBehaviour
         return offset.sqrMagnitude <= detectionRange * detectionRange;
     }
 
-    private IEnumerator TraverseLinkJump()
-    {
-        if (agent == null)
-        {
-            yield break;
-        }
-
-        isTraversingLink = true;
-
-        if (enemyAnimationController != null)
-        {
-            enemyAnimationController.EndAttackAnimationLock();
-            enemyAnimationController.SetForceMovingAnimation(true);
-        }
-
-        OffMeshLinkData linkData = agent.currentOffMeshLinkData;
-
-        Vector3 startPos = transform.position;
-        Vector3 endPos = linkData.endPos;
-
-        float timer = 0f;
-
-        agent.isStopped = true;
-        agent.updatePosition = false;
-
-        while (timer < linkJumpDuration)
-        {
-            float t = timer / linkJumpDuration;
-
-            Vector3 flatPosition = Vector3.Lerp(startPos, endPos, t);
-            float arc = Mathf.Sin(t * Mathf.PI) * linkJumpHeight;
-
-            transform.position = new Vector3(
-                flatPosition.x,
-                flatPosition.y + arc,
-                flatPosition.z
-            );
-
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = endPos;
-
-        agent.updatePosition = true;
-        agent.Warp(endPos);
-        agent.CompleteOffMeshLink();
-
-        agent.isStopped = false;
-        isTraversingLink = false;
-
-        if (enemyAnimationController != null)
-        {
-            enemyAnimationController.SetForceMovingAnimation(false);
-        }
-    }
-
     private float GetCurrentMoveSpeed()
     {
         return targetSearchMode == TargetSearchMode.GlobalSlowSearch ? globalSearchMoveSpeed : rangeSearchMoveSpeed;
@@ -566,7 +501,6 @@ public class SimpleEnemyAI : MonoBehaviour
     {
         isAttacking = true;
         currentState = EnemyState.Attacking;
-        lastAttackTime = Time.time;
 
         StopAgent();
 
