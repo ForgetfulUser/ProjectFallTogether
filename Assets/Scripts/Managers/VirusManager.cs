@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class VirusManager : MonoBehaviour
 {
-    public List<Transform> ForestPaths = new List<Transform>();
+    public List<List<Transform>> ForestPaths = new List<List<Transform>>();
     public List<Player> CurrentActivePlayers;
     public Virus Virus;
 
@@ -39,9 +39,9 @@ public class VirusManager : MonoBehaviour
         int pointIndex = 0;
         closestPointIndex = 0;
 
-        foreach(Transform path in ForestPaths)
+        foreach(List<Transform> path in ForestPaths)
         {
-            foreach(Transform point in path.GetComponentsInChildren<Transform>())
+            foreach(Transform point in path)
             {
                 float pointDistance = Vector3.Distance(transform.parent.position, point.position);
                 if(pointDistance < closestDistance)
@@ -55,22 +55,5 @@ public class VirusManager : MonoBehaviour
             pointIndex = 0;
             pathIndex++;
         }
-    }
-
-    public Transform GetClosestPoint()
-    {
-        GetClosestPathAndPoint(out int path, out int point);
-        return ForestPaths[path].GetComponentsInChildren<Transform>()[point];
-    }
-
-    public List<Transform> GetClosestPath()
-    {
-        GetClosestPathAndPoint(out int path, out int point);
-        List<Transform> list = new List<Transform>();
-        foreach(Transform pointT in ForestPaths[path].GetComponentsInChildren<Transform>())
-        {
-            list.Add(pointT);
-        }
-        return list;
     }
 }

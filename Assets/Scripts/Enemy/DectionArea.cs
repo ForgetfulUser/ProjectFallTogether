@@ -12,7 +12,6 @@ public class DectionArea : MonoBehaviour
         {
             Players.Add(other.GetComponent<Player>());
             Virus.DetectPlayer(other.GetComponent<Player>());
-            Debug.Log("got em");
         }
     }
 }
