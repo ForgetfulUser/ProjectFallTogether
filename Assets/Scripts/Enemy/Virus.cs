@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using TMPro;
 
 public enum VirusState
 {
@@ -63,9 +64,6 @@ public class Virus : MonoBehaviour
     public void StartVirus(VirusManager virusManger)
     {
         VirusManager = virusManger;
-        ForestPath = VirusManager.GetClosestPath();
-        NavMeshAgent.destination = VirusManager.GetClosestPoint().position;
-        VirusState = VirusState.Patrol;
     }
 
     public void UpdateVirus()
@@ -91,6 +89,28 @@ public class Virus : MonoBehaviour
                 break;
             case VirusState.Captured:
                 StopNavMeshAgent();
+                break;
+        }
+    }
+
+    private void DetermineState()
+    {
+        switch(VirusState)
+        {
+            case VirusState.Patrol:
+
+                break;
+            case VirusState.Detect:
+
+                break;
+            case VirusState.Chase:
+
+                break;
+            case VirusState.Search:
+
+                break;
+            case VirusState.Captured:
+
                 break;
         }
     }
@@ -125,10 +145,23 @@ public class Virus : MonoBehaviour
 
     void NextPoint()
     {
+        if (PatrolCheck() == false) return; ;
         NavMeshAgent.stoppingDistance = PatrollingStopDistance;
         pointIndex++;
         if(pointIndex >= ForestPath.Count) pointIndex = 0;
         NavMeshAgent.destination = ForestPath[pointIndex].position;
+    }
+
+    bool PatrolCheck()
+    {
+        if (ForestPath.Count == 0)
+        {
+            ForestPath = VirusManager.GetClosestPath();
+            NavMeshAgent.destination = VirusManager.GetClosestPoint().position;
+            VirusState = VirusState.Patrol;
+            return false;
+        }
+        return true;
     }
 
     void Detection()
@@ -166,6 +199,7 @@ public class Virus : MonoBehaviour
         else
         {
             // TODO: Have a function to determine VirusState
+
             StopNavMeshAgent();
             VirusState = VirusState.Patrol;
         }

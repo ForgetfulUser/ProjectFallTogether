@@ -41,11 +41,13 @@ public class VirusManager : MonoBehaviour
 
         foreach(Transform path in ForestPaths)
         {
+            Debug.Log("Checkign");
             foreach(Transform point in path.GetComponentsInChildren<Transform>())
             {
                 float pointDistance = Vector3.Distance(transform.parent.position, point.position);
                 if(pointDistance < closestDistance)
                 {
+                    Debug.Log("Path Index: " + pathIndex + " Point Index: " + pointIndex);
                     closestPathIndex = pathIndex;
                     closestPointIndex = pointIndex;
                 }
