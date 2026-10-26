@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -27,6 +28,8 @@ public class Virus : MonoBehaviour
     public float MaxSearchDistance;
     [Tooltip("Min Distance from the Virus it will search")]
     public float MinSearchDistance;
+    [Tooltip("How long the Virus stays at a point, searching")]
+    public float SearchTime;
     private Vector3 searchPoint;
     private float searchDistance;
     private bool isSearching;
@@ -151,11 +154,20 @@ public class Virus : MonoBehaviour
             searchPoint = (searchDirection * searchDistance) + transform.position;
             isSearching = true;
         }
-        NavMeshAgent.SetDestination(searchPoint);
-        if(NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance + 1)
+        if(CurrentCoroutine == null)
         {
-            isSearching = false;
+            CurrentCoroutine = StartCoroutine(SearchPoint());
         }
+    }
+
+    public IEnumerator SearchPoint()
+    {
+        NavMeshAgent.SetDestination(searchPoint);
+        yield return NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance + 1;
+        // Enter Searching Animation
+        yield return new WaitForSeconds(SearchTime);
+        isSearching = false;
+        CurrentCoroutine = null;
     }
 
     void StaticAbility()

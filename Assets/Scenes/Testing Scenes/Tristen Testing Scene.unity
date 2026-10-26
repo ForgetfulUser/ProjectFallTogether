@@ -618,6 +618,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Virus
       objectReference: {fileID: 0}
+    - target: {fileID: 5595224566946554108, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
+      propertyPath: SearchTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5699734099867121776, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.67
