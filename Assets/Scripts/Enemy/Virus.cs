@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,12 +18,21 @@ public class Virus : MonoBehaviour
     // Game Manager:
     //      Landmarks
 
-    // Forest Paths
     [Tooltip("Determines the virus' behaviour. Is it chasing? Patroling? Etc...")]
     public VirusState VirusState;
     [Tooltip("How far from the virus is the static/distortion effect?")]
     public float StaticAbilityRadiusEffect;
     public NavMeshAgent NavMeshAgent;
+
+    [Header("Patrol Variable")]
+    [Tooltip("Time the Virus will pause when reaching a point on their Forst Path")]
+    public float PatrolPauseTime;
+    [Tooltip("Distance the Virus will stop while Patrolling")]
+    public float PatrollingStopDistance;
+    // The current Path the Virus is patroling
+    [HideInInspector] public List<Transform> ForestPath = new List<Transform>();
+    private bool isPatrolling;
+    private int pointIndex;
 
     [Header("Search Variables")]
     [Tooltip("Max Distance from the Virus it will search")]
@@ -37,6 +48,8 @@ public class Virus : MonoBehaviour
     [Header("Chase Variables")]
     [Tooltip("How far can the player run before the chase stops?")]
     public float ChaseBreakDistance;
+    [Tooltip("Distance the Virus will stop while Chasing")]
+    public float ChasingStopDistance;
 
     [Header("Detection Variables")]
     public Player DetectedPlayer;
@@ -50,7 +63,9 @@ public class Virus : MonoBehaviour
     public void StartVirus(VirusManager virusManger)
     {
         VirusManager = virusManger;
-        VirusState = VirusState.Detect;
+        ForestPath = VirusManager.GetClosestPath();
+        NavMeshAgent.destination = VirusManager.GetClosestPoint().position;
+        VirusState = VirusState.Patrol;
     }
 
     public void UpdateVirus()
@@ -90,7 +105,30 @@ public class Virus : MonoBehaviour
     void Patrol()
     {
         // Wander Forest Path
+        if (isPatrolling == false)
+        {
+            NextPoint();
+            CurrentCoroutine = StartCoroutine(PatrolToPoint());
+        }
         // Randomly appear new a landmark
+    }
+
+    IEnumerator PatrolToPoint()
+    {
+        isPatrolling = true;
+        yield return new WaitUntil(() => NavMeshAgent.remainingDistance <= 0.01f);
+        yield return new WaitForSeconds(PatrolPauseTime);
+        isPatrolling = false;
+        CurrentCoroutine = null;
+
+    }
+
+    void NextPoint()
+    {
+        NavMeshAgent.stoppingDistance = PatrollingStopDistance;
+        pointIndex++;
+        if(pointIndex >= ForestPath.Count) pointIndex = 0;
+        NavMeshAgent.destination = ForestPath[pointIndex].position;
     }
 
     void Detection()
@@ -114,7 +152,11 @@ public class Virus : MonoBehaviour
         DetectionArea.transform.localScale = Vector3.one;
         DetectionArea.Players.Clear();
 
-        if (CurrentCoroutine != null) StopCoroutine(CurrentCoroutine);
+        if (CurrentCoroutine != null)
+        {
+            StopCoroutine(CurrentCoroutine);
+            CurrentCoroutine = null;
+        }
         DetectedPlayer = player;
         if(DetectedPlayer != null)
         {
@@ -132,7 +174,9 @@ public class Virus : MonoBehaviour
     void Chase()
     {
         // Pursue detected player
+        NavMeshAgent.stoppingDistance = ChasingStopDistance;
         NavMeshAgent.destination = DetectedPlayer.transform.position;
+
         if (Vector3.Distance(transform.position, DetectedPlayer.transform.position) >= ChaseBreakDistance)
         {
             StopNavMeshAgent();
@@ -163,7 +207,7 @@ public class Virus : MonoBehaviour
     public IEnumerator SearchPoint()
     {
         NavMeshAgent.SetDestination(searchPoint);
-        yield return NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance + 1;
+        yield return new WaitUntil(() => NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance + 1);
         // Enter Searching Animation
         yield return new WaitForSeconds(SearchTime);
         isSearching = false;

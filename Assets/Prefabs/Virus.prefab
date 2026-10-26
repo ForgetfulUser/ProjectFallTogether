@@ -249,9 +249,14 @@ MonoBehaviour:
   VirusState: 0
   StaticAbilityRadiusEffect: 3
   NavMeshAgent: {fileID: 5500692685358518808}
+  PatrolPauseTime: 3
+  PatrollingStopDistance: 0
+  ForestPath: []
   MaxSearchDistance: 10
   MinSearchDistance: 15
+  SearchTime: 5
   ChaseBreakDistance: 20
+  ChasingStopDistance: 8
   DetectedPlayer: {fileID: 0}
   DetectionGrowRate: 10
   DetectionArea: {fileID: 5784819235140188573}
