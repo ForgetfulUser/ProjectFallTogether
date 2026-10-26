@@ -1,4 +1,3 @@
-using NUnit.Framework.Internal.Commands;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,6 +21,15 @@ public class Virus : MonoBehaviour
     [Tooltip("How far from the virus is the static/distortion effect?")]
     public float StaticAbilityRadiusEffect;
     public NavMeshAgent NavMeshAgent;
+
+    [Header("Search Variables")]
+    [Tooltip("Max Distance from the Virus it will search")]
+    public float MaxSearchDistance;
+    [Tooltip("Min Distance from the Virus it will search")]
+    public float MinSearchDistance;
+    private Vector3 searchPoint;
+    private float searchDistance;
+    private bool isSearching;
 
     [Header("Chase Variables")]
     [Tooltip("How far can the player run before the chase stops?")]
@@ -71,6 +79,7 @@ public class Virus : MonoBehaviour
 
     private void StopNavMeshAgent()
     {
+        NavMeshAgent.SetDestination(transform.position);
         NavMeshAgent.isStopped = true;
         NavMeshAgent.ResetPath();
     }
@@ -91,6 +100,7 @@ public class Virus : MonoBehaviour
             if(Vector3.Distance(transform.position, player.transform.position) < ChaseBreakDistance)
             {
                 DetectPlayer(player);
+                break;
             }
         }
     }
@@ -111,6 +121,7 @@ public class Virus : MonoBehaviour
         else
         {
             // TODO: Have a function to determine VirusState
+            StopNavMeshAgent();
             VirusState = VirusState.Patrol;
         }
     }
@@ -119,6 +130,11 @@ public class Virus : MonoBehaviour
     {
         // Pursue detected player
         NavMeshAgent.destination = DetectedPlayer.transform.position;
+        if (Vector3.Distance(transform.position, DetectedPlayer.transform.position) >= ChaseBreakDistance)
+        {
+            StopNavMeshAgent();
+            VirusState = VirusState.Search;
+        }
     }
 
     void Captured()
@@ -128,8 +144,18 @@ public class Virus : MonoBehaviour
 
     void Search()
     {
-        // Occurs if the player escapes their detection or if the player 
-        // Investigates player's last known position
+        if(isSearching == false)
+        {
+            searchDistance = Random.Range(MinSearchDistance, MaxSearchDistance);
+            Vector3 searchDirection = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
+            searchPoint = (searchDirection * searchDistance) + transform.position;
+            isSearching = true;
+        }
+        NavMeshAgent.SetDestination(searchPoint);
+        if(NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance + 1)
+        {
+            isSearching = false;
+        }
     }
 
     void StaticAbility()

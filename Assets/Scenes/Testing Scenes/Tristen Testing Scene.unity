@@ -249,6 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Virus: {fileID: 1142063525}
+  Players: []
 --- !u!1 &732694248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,7 +1218,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 8
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -1240,10 +1241,12 @@ MonoBehaviour:
   VirusState: 0
   StaticAbilityRadiusEffect: 3
   NavMeshAgent: {fileID: 1142063524}
+  MaxSearchDistance: 10
+  MinSearchDistance: 15
   ChaseBreakDistance: 20
   DetectedPlayer: {fileID: 0}
-  DetectionGrowRate: 1
-  DetectionCollider_GO: {fileID: 540167989}
+  DetectionGrowRate: 10
+  DetectionArea: {fileID: 540167992}
 --- !u!1 &1145609417
 GameObject:
   m_ObjectHideFlags: 0
