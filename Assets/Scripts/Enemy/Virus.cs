@@ -59,6 +59,9 @@ public class Virus : MonoBehaviour
     [Tooltip("Thing that Detects the players")]
     public DectionArea DetectionArea;
 
+    [Header("Attack References")]
+    public DigitalSnare DigitalSnare_PRFB;
+
     public Coroutine CurrentCoroutine;
     private VirusManager VirusManager;
     public void StartVirus(VirusManager virusManger)
@@ -124,6 +127,7 @@ public class Virus : MonoBehaviour
 
     void Patrol()
     {
+        Debug.Log("Patrol");
         // Wander Forest Path
         if (isPatrolling == false)
         {
@@ -135,17 +139,20 @@ public class Virus : MonoBehaviour
 
     IEnumerator PatrolToPoint()
     {
+        Debug.Log("Start to pointr");
         isPatrolling = true;
-        yield return new WaitUntil(() => NavMeshAgent.remainingDistance <= 0.01f);
+        yield return new WaitUntil(() => NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance);
+        Debug.Log("Wait at point");
         yield return new WaitForSeconds(PatrolPauseTime);
         isPatrolling = false;
+        Debug.Log("Go Next");
         CurrentCoroutine = null;
 
     }
 
     void NextPoint()
     {
-        if (PatrolCheck() == false) return; ;
+        if (PatrolCheck() == false) return;
         NavMeshAgent.stoppingDistance = PatrollingStopDistance;
         pointIndex++;
         if(pointIndex >= ForestPath.Count) pointIndex = 0;
@@ -156,6 +163,7 @@ public class Virus : MonoBehaviour
     {
         if (ForestPath.Count == 0)
         {
+            Debug.Log("Check");
             ForestPath = VirusManager.GetClosestPath();
             NavMeshAgent.destination = VirusManager.GetClosestPoint().position;
             VirusState = VirusState.Patrol;
@@ -216,6 +224,21 @@ public class Virus : MonoBehaviour
             StopNavMeshAgent();
             VirusState = VirusState.Search;
         }
+
+        if(NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance)
+        {
+            SpawnDigitalSnare();
+            transform.position = Vector3.zero;
+            VirusState = VirusState.Search;
+        }
+    }
+
+    public void SpawnDigitalSnare()
+    {
+        if(DetectedPlayer == null) return;
+
+        Instantiate(DigitalSnare_PRFB, DetectedPlayer.transform.position, Quaternion.identity);
+        DetectedPlayer = null;
     }
 
     void Captured()

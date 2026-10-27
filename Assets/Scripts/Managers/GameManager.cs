@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
 
         PlayerManager.UpdateManager();
         VirusManager.UpdateManager();
-
+/*
         if (enableDebugReset && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
         {
             VirusManager.ResetVirus();
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
             isGameRunning = false;
             GameOver();
         }
-
+*/
         CameraManager.UpdateCamera();
     }
 

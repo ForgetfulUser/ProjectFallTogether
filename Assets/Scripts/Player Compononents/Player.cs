@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 {
     public PlayerMovement PlayerMovement;
     public PlayerAnimationController PlayerAnimationController;
+    public bool IsSnared = false;
     //public PlayerCanvasManager PlayerCanvasManager;
 
     [Header("Player Indicator")]
@@ -18,6 +19,8 @@ public class Player : MonoBehaviour
     public Vector3 StartPos;
     public bool IsActive = true;
 
+    public DigitalSnare Snare;
+
     public virtual void StartPlayer(int playerID)
     {
         PlayerMovement.StartMovement();
@@ -28,13 +31,18 @@ public class Player : MonoBehaviour
 
     public virtual void UpdatePlayer()
     {
-        PlayerMovement.UpdateMovement(out Vector2 moveDir, out bool isJumping, out bool isPunching);
+        if (IsSnared) return;
+        {
+            Debug.Log("H");
+            PlayerMovement.UpdateMovement(out Vector2 moveDir, out bool isJumping, out bool isPunching);
 
-        PlayerAnimationController.UpdateAnimation(moveDir, isJumping, isPunching);
+            PlayerAnimationController.UpdateAnimation(moveDir, isJumping, isPunching);
+        }
     }
 
     public virtual void FixedUpdatePlayer()
     {
+        if (IsSnared) return;
         PlayerMovement.FixedUpdateMovement();
     }
 

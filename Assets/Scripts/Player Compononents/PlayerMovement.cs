@@ -30,13 +30,14 @@ public class PlayerMovement : MonoBehaviour
     [Header("Fall Speed")]
     public float maxFallSpeed = 18;
 
+    private Player player;
     private Coroutine appliedForceRoutine;
     private Coroutine punchingCoroutine;
     private bool isPunching;
 
     public void StartMovement()
     {
-        
+        player = GetComponent<Player>();
         rb = GetComponent<Rigidbody>();
         stunTimer = 0f;
     }
@@ -120,14 +121,21 @@ public class PlayerMovement : MonoBehaviour
     public void Attack(InputAction.CallbackContext context)
     {
         if (context.canceled) return;
+        if (player.IsSnared) return;
+
         if (punchingCoroutine == null) { punchingCoroutine = StartCoroutine(PunchingCoroutine()); }
     }
 
-    public void Jump(InputAction.CallbackContext context)
+    public void Interact(InputAction.CallbackContext context)
     {
-        if (stunTimer > 0f || isJumping) return;
-        isJumping = true;
-        rb.AddForce(new Vector3(0,jumpPower,0), ForceMode.Impulse);
+        Debug.Log("HIT");
+        if (player.IsSnared) return;
+
+        if(player.Snare != null)
+        {
+            player.Snare.DestroySnare();
+            player.Snare = null;
+        }
     }
 
     private void GroundCheck()
