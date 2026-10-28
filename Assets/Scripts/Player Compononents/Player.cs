@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +20,8 @@ public class Player : MonoBehaviour
     public Vector3 StartPos;
     public bool IsActive = true;
 
-    public DigitalSnare Snare;
+    [Header("Items")]
+    public bool HasCrowbar;
 
     public virtual void StartPlayer(int playerID)
     {
@@ -54,6 +56,16 @@ public class Player : MonoBehaviour
     public void GetBopped(int boppedAmount)
     {
         CurrentLives--;
+    }
+
+    public void PickupItem(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Crowbar:
+                HasCrowbar = true;
+                break;
+        }
     }
 
     public virtual void TagPlayer()
