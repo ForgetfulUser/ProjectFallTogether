@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DigitalSnare : MonoBehaviour
 {
+    public Virus MyVirus;
     public Player snaredPlayer;
     private void OnTriggerEnter(Collider other)
     {
@@ -19,6 +20,8 @@ public class DigitalSnare : MonoBehaviour
     {
         if(snaredPlayer != null) 
             snaredPlayer.IsSnared = false;
+
+        MyVirus.CurrentSnare = null;
         Destroy(gameObject);
     }
 }

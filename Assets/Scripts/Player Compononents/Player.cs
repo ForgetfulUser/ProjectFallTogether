@@ -33,7 +33,6 @@ public class Player : MonoBehaviour
     {
         if (IsSnared) return;
         {
-            Debug.Log("H");
             PlayerMovement.UpdateMovement(out Vector2 moveDir, out bool isJumping, out bool isPunching);
 
             PlayerAnimationController.UpdateAnimation(moveDir, isJumping, isPunching);
@@ -50,6 +49,11 @@ public class Player : MonoBehaviour
     {
         transform.localPosition = StartPos;
         PlayerMovement.ResetMovement();
+    }
+
+    public void GetBopped(int boppedAmount)
+    {
+        CurrentLives--;
     }
 
     public virtual void TagPlayer()

@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using TMPro.Examples;
 
 public enum VirusState
 {
@@ -59,8 +60,15 @@ public class Virus : MonoBehaviour
     [Tooltip("Thing that Detects the players")]
     public DectionArea DetectionArea;
 
-    [Header("Attack References")]
+    [Header("Snare References")]
+    [Tooltip("How close the virus must get before they can snare a player")]
+    public float SnareDistance = 8;
     public DigitalSnare DigitalSnare_PRFB;
+    public DigitalSnare CurrentSnare;
+
+    [Header("Attack References")]
+    [Tooltip("Time between attacks")]
+    public float AttackDelay = 2;
 
     public Coroutine CurrentCoroutine;
     private VirusManager VirusManager;
@@ -225,20 +233,46 @@ public class Virus : MonoBehaviour
             VirusState = VirusState.Search;
         }
 
-        if(NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance)
+        if(NavMeshAgent.remainingDistance <= SnareDistance)
         {
             SpawnDigitalSnare();
-            transform.position = Vector3.zero;
-            VirusState = VirusState.Search;
+            //transform.position = Vector3.zero;
+            //VirusState = VirusState.Search;
+        }
+
+        if(NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance)
+        {
+            Attack();
         }
     }
 
     public void SpawnDigitalSnare()
     {
-        if(DetectedPlayer == null) return;
+        if(DetectedPlayer == null || CurrentSnare != null) return;
 
         Instantiate(DigitalSnare_PRFB, DetectedPlayer.transform.position, Quaternion.identity);
-        DetectedPlayer = null;
+        //DetectedPlayer = null;
+    }
+
+    void Attack()
+    {
+        if(CurrentCoroutine != null)
+        {
+            StopCoroutine(CurrentCoroutine);
+            CurrentCoroutine = null;
+        }
+        int amount = 4;
+        DetectedPlayer.GetBopped(amount);
+        CurrentCoroutine = StartCoroutine(AttackCoroutine());   
+    }
+
+    IEnumerator AttackCoroutine()
+    {
+        yield return new WaitForSeconds(AttackDelay);
+        CurrentCoroutine = null;
+        if (Vector3.Distance(DetectedPlayer.transform.position, transform.position) <= NavMeshAgent.stoppingDistance && VirusState == VirusState.Chase)
+            Attack();
+        yield return null;
     }
 
     void Captured()
