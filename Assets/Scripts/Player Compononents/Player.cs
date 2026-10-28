@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     [Header("Items")]
     public bool HasCrowbar;
 
+    public DigitalSnare Snare;
     public virtual void StartPlayer(int playerID)
     {
         PlayerMovement.StartMovement();
