@@ -18,14 +18,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Stun")]
     private float stunTimer;
 
-    [Header("Jump")]
-    public float jumpPower = 10;
-    private bool isJumping;
-
-    [Header("Ground Check")]
-    public LayerMask groundLayer;
-    public Transform groundCheckPos;
-    public Vector3 groundCheckSize = new Vector3(0.5f, 0.5f, 0.5f);
 
     [Header("Fall Speed")]
     public float maxFallSpeed = 18;
@@ -123,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
         if (context.canceled) return;
         if (player.IsSnared) return;
 
-        if (punchingCoroutine == null) { punchingCoroutine = StartCoroutine(PunchingCoroutine()); }
+        //if (punchingCoroutine == null) { punchingCoroutine = StartCoroutine(PunchingCoroutine()); }
     }
 
     public void Interact(InputAction.CallbackContext context)
@@ -135,26 +127,6 @@ public class PlayerMovement : MonoBehaviour
         {
             player.Snare.DestroySnare();
             player.Snare = null;
-        }
-    }
-
-    private void GroundCheck()
-    {
-        if (groundCheckPos == null)
-        {
-            return;
-        }
-
-        Collider[] hits = Physics.OverlapBox(
-            groundCheckPos.position,
-            groundCheckSize,
-            Quaternion.identity,
-            groundLayer
-        );
-
-        if (hits.Length > 0 && rb.linearVelocity.y <= 0)
-        {
-            isJumping = false;
         }
     }
 
@@ -189,16 +161,5 @@ public class PlayerMovement : MonoBehaviour
         }
         rb.linearVelocity = Vector3.zero;
         stunTimer = -1;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (groundCheckPos == null)
-        {
-            return;
-        }
-
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize * 2f);
     }
 }
