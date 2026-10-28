@@ -128,6 +128,7 @@ public class Virus : MonoBehaviour
 
     private void StopNavMeshAgent()
     {
+        DetectedPlayer = null;
         NavMeshAgent.SetDestination(transform.position);
         NavMeshAgent.isStopped = true;
         NavMeshAgent.ResetPath();
@@ -171,8 +172,8 @@ public class Virus : MonoBehaviour
     {
         if (ForestPath.Count == 0)
         {
-            Debug.Log("Check");
             ForestPath = VirusManager.GetClosestPath();
+            if (ForestPath == null) return false;
             NavMeshAgent.destination = VirusManager.GetClosestPoint().position;
             VirusState = VirusState.Patrol;
             return false;
@@ -248,14 +249,21 @@ public class Virus : MonoBehaviour
 
     public void SpawnDigitalSnare()
     {
-        if(DetectedPlayer == null || CurrentSnare != null) return;
+        if(DetectedPlayer == null || CurrentSnare != null || VirusState != VirusState.Chase) return;
 
-        Instantiate(DigitalSnare_PRFB, DetectedPlayer.transform.position, Quaternion.identity);
+        CurrentSnare = Instantiate(DigitalSnare_PRFB, DetectedPlayer.transform.position, Quaternion.identity);
+
         //DetectedPlayer = null;
     }
 
     void Attack()
     {
+        if(DetectedPlayer == null || DetectedPlayer.CurrentLives <= 0)
+        {
+            VirusState = VirusState.Search;
+            CurrentCoroutine = null;
+            return;
+        }
         if(CurrentCoroutine != null)
         {
             StopCoroutine(CurrentCoroutine);

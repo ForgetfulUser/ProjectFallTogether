@@ -61,12 +61,22 @@ public class VirusManager : MonoBehaviour
 
     public Transform GetClosestPoint()
     {
+        if (ForestPaths.Count == 0)
+        {
+            Virus.VirusState = VirusState.Detect;
+            return null;
+        }
         GetClosestPathAndPoint(out int path, out int point);
         return ForestPaths[path].GetComponentsInChildren<Transform>()[point];
     }
 
     public List<Transform> GetClosestPath()
     {
+        if (ForestPaths.Count == 0)
+        {
+            Virus.VirusState = VirusState.Detect;
+            return null;
+        }
         GetClosestPathAndPoint(out int path, out int point);
         List<Transform> list = new List<Transform>();
         foreach(Transform pointT in ForestPaths[path].GetComponentsInChildren<Transform>())
