@@ -6,43 +6,39 @@ public class Player : MonoBehaviour
 {
     public PlayerMovement PlayerMovement;
     public PlayerAnimationController PlayerAnimationController;
-    public PlayerAttack PlayerAttack;
     public bool IsSnared = false;
+    //public PlayerCanvasManager PlayerCanvasManager;
 
-    // Player Indicator
-    [HideInInspector] public int PlayerID = -1;
+    [Header("Player Indicator")]
+    public int PlayerID = -1;
 
     [Header("Stats")]
+    public int CurrentLives;
     public int MaxLives;
-    [HideInInspector] public int CurrentLives;
 
-    // Reset Variables
-    [HideInInspector] public Vector3 StartPos;
-    [HideInInspector] public bool IsActive = true;
+    [Header("Reset Variables")]
+    public Vector3 StartPos;
+    public bool IsActive = true;
 
     [Header("Items")]
     public bool HasCrowbar;
 
-    [HideInInspector] public DigitalSnare Snare;
-
+    public DigitalSnare Snare;
     public virtual void StartPlayer(int playerID)
     {
         PlayerMovement.StartMovement();
         PlayerID = playerID;
         PlayerAnimationController.StartAnimation(PlayerID);
         StartPos = transform.localPosition;
-        CurrentLives = MaxLives;
     }
 
     public virtual void UpdatePlayer()
     {
         if (IsSnared) return;
         {
-            PlayerMovement.UpdateMovement(out Vector2 moveDir, out bool isAttacking);
+            PlayerMovement.UpdateMovement(out Vector2 moveDir, out bool isJumping, out bool isPunching);
 
-            PlayerAnimationController.UpdateAnimation(moveDir, isAttacking);
-
-            PlayerAttack.Attack(moveDir, isAttacking);
+            PlayerAnimationController.UpdateAnimation(moveDir, isJumping, isPunching);
         }
     }
 
@@ -71,5 +67,10 @@ public class Player : MonoBehaviour
                 HasCrowbar = true;
                 break;
         }
+    }
+
+    public virtual void TagPlayer()
+    {
+
     }
 }
