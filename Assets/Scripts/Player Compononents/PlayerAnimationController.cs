@@ -44,7 +44,7 @@ public class PlayerAnimationController : MonoBehaviour
 */
     }
 
-    public void UpdateAnimation(Vector2 moveDir, bool isJumping, bool isPunching)
+    public void UpdateAnimation(Vector2 moveDir, bool isPunching)
     {
         return;
         int x = Mathf.RoundToInt(moveDir.x);
@@ -54,7 +54,6 @@ public class PlayerAnimationController : MonoBehaviour
         if(x != 0) lastHorzVal = x;
         Animator.SetBool("Is Punching", isPunching);
         SpriteRenderer.flipX = (isPunching && lastHorzVal > 0);
-        //if(isJumping != lastJumpVal) ToggleJump();
     }
 
     private void ToggleJump()

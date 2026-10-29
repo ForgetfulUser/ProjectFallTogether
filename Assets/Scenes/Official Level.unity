@@ -10138,6 +10138,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1118315573891806886, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4195937032187258196, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
       propertyPath: m_Name
       value: Virus
@@ -10152,7 +10156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5699734099867121776, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 664.4
+      value: 437.2
       objectReference: {fileID: 0}
     - target: {fileID: 5699734099867121776, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10160,7 +10164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5699734099867121776, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 220.2
+      value: 113.9
       objectReference: {fileID: 0}
     - target: {fileID: 5699734099867121776, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
       propertyPath: m_LocalRotation.w
