@@ -238,6 +238,7 @@ MonoBehaviour:
   ChaseBreakDistance: 20
   ChasingStopDistance: 5
   DetectedPlayer: {fileID: 0}
+  BaseDetectionDistance: 5
   DetectionGrowRate: 10
   DetectionArea: {fileID: 5784819235140188573}
   SnareDistance: 8

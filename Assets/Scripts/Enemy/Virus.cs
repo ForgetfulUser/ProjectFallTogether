@@ -54,7 +54,8 @@ public class Virus : MonoBehaviour
     public float ChasingStopDistance;
 
     [Header("Detection Variables")]
-    public Player DetectedPlayer;
+    [Tooltip("How far the Virus will detect while not in Detection mode")]
+    public float BaseDetectionDistance;
     [Tooltip("Determines how the detection radius grows per second")]
     public float DetectionGrowRate;
     [Tooltip("Thing that Detects the players")]
@@ -70,6 +71,7 @@ public class Virus : MonoBehaviour
     [Tooltip("Time between attacks")]
     public float AttackDelay = 2;
 
+    [HideInInspector] public Player DetectedPlayer;
     public Coroutine CurrentCoroutine;
     private VirusManager VirusManager;
     public void StartVirus(VirusManager virusManger)
@@ -82,7 +84,8 @@ public class Virus : MonoBehaviour
         if (CurrentCoroutine != null) return;
 
         // Determine appropiate state
-
+        if(VirusState != VirusState.Detect)
+            DetectionArea.transform.localScale = Vector3.one * BaseDetectionDistance;
         // Use Switch to call the state's functions
         switch (VirusState)
         {
@@ -199,7 +202,6 @@ public class Virus : MonoBehaviour
     public void DetectPlayer(Player player)
     {
         if (Vector3.Distance(transform.position, player.transform.position) >= ChaseBreakDistance) return;
-        DetectionArea.transform.localScale = Vector3.one;
         DetectionArea.Players.Clear();
 
         if (CurrentCoroutine != null)
