@@ -283,11 +283,6 @@ public class Virus : MonoBehaviour
         yield return null;
     }
 
-    void Captured()
-    {
-        // Temporarily unable to move
-    }
-
     void Search()
     {
         if(isSearching == false)
@@ -311,6 +306,19 @@ public class Virus : MonoBehaviour
         yield return new WaitForSeconds(SearchTime);
         isSearching = false;
         CurrentCoroutine = null;
+    }
+
+    public void ToggleCapture()
+    {
+        if (VirusState == VirusState.Captured)
+        {
+            VirusState = VirusState.Detect;
+        }
+        else
+        {
+            CurrentCoroutine = null;
+            VirusState = VirusState.Captured;
+        }
     }
 
     void StaticAbility()
