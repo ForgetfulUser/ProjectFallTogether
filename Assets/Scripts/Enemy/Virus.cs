@@ -36,7 +36,7 @@ public class Virus : MonoBehaviour
     [Tooltip("Distance the Virus will stop while Patrolling")]
     public float PatrollingStopDistance;
     // The current Path the Virus is patroling
-    [HideInInspector] public List<Transform> ForestPath = new List<Transform>();
+    public List<Transform> ForestPath = new List<Transform>();
     private bool isPatrolling;
     private int pointIndex;
 
@@ -212,7 +212,7 @@ public class Virus : MonoBehaviour
 
     bool PatrolCheck()
     {
-        if (ForestPath == null)
+        if (ForestPath.Count <= 0)
         {
             ForestPath = VirusManager.GetClosestPath();
             if (ForestPath == null) return false;

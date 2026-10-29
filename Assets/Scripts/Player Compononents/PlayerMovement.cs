@@ -34,6 +34,11 @@ public class PlayerMovement : MonoBehaviour
     
     public void FixedUpdateMovement()
     {
+        if (GetComponent<Player>().IsSnared)
+        {
+            rb.linearVelocity = Vector3.zero;
+            return;
+        }
         /*
                 Vector3 force = Vector3.zero;
 
