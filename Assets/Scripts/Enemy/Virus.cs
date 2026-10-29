@@ -98,7 +98,7 @@ public class Virus : MonoBehaviour
 
     public void UpdateVirus()
     {
-
+        if (VirusState == VirusState.Captured) return;
         if (currentStateTime > 0)
         {
             currentStateTime -= Time.deltaTime;
@@ -167,7 +167,7 @@ public class Virus : MonoBehaviour
                 currentStateTime = Random.Range(MinSearchTime, MaxSearchTime);
                 break;
             case VirusState.Captured:
-
+                StopNavMeshAgent();
                 break;
         }
     }
@@ -359,6 +359,7 @@ public class Virus : MonoBehaviour
         {
             CurrentCoroutine = null;
             VirusState = VirusState.Captured;
+            ChangeState();
         }
     }
 
