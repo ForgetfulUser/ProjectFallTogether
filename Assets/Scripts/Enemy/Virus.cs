@@ -27,6 +27,10 @@ public class Virus : MonoBehaviour
     public NavMeshAgent NavMeshAgent;
 
     [Header("Patrol Variable")]
+    [Tooltip("Max time the Virus will spend searching")]
+    public float MaxPatrolTime;
+    [Tooltip("Min time the Virus will spend searching")]
+    public float MinPatrolTime;
     [Tooltip("Time the Virus will pause when reaching a point on their Forst Path")]
     public float PatrolPauseTime;
     [Tooltip("Distance the Virus will stop while Patrolling")]
@@ -37,6 +41,10 @@ public class Virus : MonoBehaviour
     private int pointIndex;
 
     [Header("Search Variables")]
+    [Tooltip("Max time the Virus will spend searching")]
+    public float MaxSearchTime;
+    [Tooltip("Min time the Virus will spend searching")]
+    public float MinSearchTime;
     [Tooltip("Max Distance from the Virus it will search")]
     public float MaxSearchDistance;
     [Tooltip("Min Distance from the Virus it will search")]
@@ -48,12 +56,20 @@ public class Virus : MonoBehaviour
     private bool isSearching;
 
     [Header("Chase Variables")]
+    [Tooltip("Max time the Virus will spend searching")]
+    public float MaxChaseTime;
+    [Tooltip("Min time the Virus will spend searching")]
+    public float MinChaseTime;
     [Tooltip("How far can the player run before the chase stops?")]
     public float ChaseBreakDistance;
     [Tooltip("Distance the Virus will stop while Chasing")]
     public float ChasingStopDistance;
 
     [Header("Detection Variables")]
+    [Tooltip("Max time the Virus will spend searching")]
+    public float MaxDetectTime;
+    [Tooltip("Min time the Virus will spend searching")]
+    public float MinDetectTime;
     [Tooltip("How far the Virus will detect while not in Detection mode")]
     public float BaseDetectionDistance;
     [Tooltip("Determines how the detection radius grows per second")]
@@ -71,6 +87,7 @@ public class Virus : MonoBehaviour
     [Tooltip("Time between attacks")]
     public float AttackDelay = 2;
 
+    private float currentStateTime;
     [HideInInspector] public Player DetectedPlayer;
     public Coroutine CurrentCoroutine;
     private VirusManager VirusManager;
@@ -81,6 +98,20 @@ public class Virus : MonoBehaviour
 
     public void UpdateVirus()
     {
+
+        if (currentStateTime > 0)
+        {
+            currentStateTime -= Time.deltaTime;
+        }
+        else
+        {
+            DetermineState();
+            if (CurrentCoroutine != null)
+            {
+                StopCoroutine(CurrentCoroutine);
+                CurrentCoroutine = null;
+            }
+        }
         if (CurrentCoroutine != null) return;
 
         // Determine appropiate state
@@ -109,19 +140,31 @@ public class Virus : MonoBehaviour
 
     private void DetermineState()
     {
-        switch(VirusState)
+        if (VirusState == VirusState.Captured || VirusState == VirusState.Chase) return;
+        VirusState = (VirusState)Random.Range(0, 5);
+        if (VirusState == VirusState.Captured || VirusState == VirusState.Chase) VirusState = VirusState.Search;
+
+        ChangeState();
+    }
+
+    public void ChangeState()
+    {
+        switch (VirusState)
         {
             case VirusState.Patrol:
-
+                isPatrolling = false;
+                currentStateTime = Random.Range(MinPatrolTime, MaxPatrolTime);
                 break;
             case VirusState.Detect:
-
+                StopNavMeshAgent();
+                currentStateTime = Random.Range(MinDetectTime, MaxDetectTime);
                 break;
             case VirusState.Chase:
-
+                currentStateTime = Random.Range(MinChaseTime, MaxChaseTime);
                 break;
             case VirusState.Search:
-
+                isSearching = false;
+                currentStateTime = Random.Range(MinSearchTime, MaxSearchTime);
                 break;
             case VirusState.Captured:
 
@@ -139,7 +182,6 @@ public class Virus : MonoBehaviour
 
     void Patrol()
     {
-        Debug.Log("Patrol");
         // Wander Forest Path
         if (isPatrolling == false)
         {
@@ -151,13 +193,10 @@ public class Virus : MonoBehaviour
 
     IEnumerator PatrolToPoint()
     {
-        Debug.Log("Start to pointr");
         isPatrolling = true;
         yield return new WaitUntil(() => NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance);
-        Debug.Log("Wait at point");
         yield return new WaitForSeconds(PatrolPauseTime);
         isPatrolling = false;
-        Debug.Log("Go Next");
         CurrentCoroutine = null;
 
     }

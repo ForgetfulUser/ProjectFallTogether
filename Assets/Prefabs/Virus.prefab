@@ -229,15 +229,22 @@ MonoBehaviour:
   VirusState: 1
   StaticAbilityRadiusEffect: 3
   NavMeshAgent: {fileID: 5500692685358518808}
+  MaxPatrolTime: 5
+  MinPatrolTime: 3
   PatrolPauseTime: 3
   PatrollingStopDistance: 0
   ForestPath: []
+  MaxSearchTime: 5
+  MinSearchTime: 3
   MaxSearchDistance: 10
   MinSearchDistance: 15
   SearchTime: 5
+  MaxChaseTime: 5
+  MinChaseTime: 3
   ChaseBreakDistance: 20
   ChasingStopDistance: 5
-  DetectedPlayer: {fileID: 0}
+  MaxDetectTime: 5
+  MinDetectTime: 3
   BaseDetectionDistance: 5
   DetectionGrowRate: 10
   DetectionArea: {fileID: 5784819235140188573}
@@ -245,6 +252,7 @@ MonoBehaviour:
   DigitalSnare_PRFB: {fileID: 1836804614544725975, guid: 993db79f60d993a44ba168d98ae1f82d, type: 3}
   CurrentSnare: {fileID: 0}
   AttackDelay: 2
+  DetectedPlayer: {fileID: 0}
 --- !u!195 &5500692685358518808
 NavMeshAgent:
   m_ObjectHideFlags: 0
