@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool IsActive = true;
 
     [Header("Items")]
-    public bool HasCrowbar;
+    public List<ItemType> ItemTypes = new List<ItemType>();
 
     [HideInInspector] public DigitalSnare Snare;
 
@@ -63,13 +63,10 @@ public class Player : MonoBehaviour
         CurrentLives--;
     }
 
-    public void PickupItem(ItemType itemType)
+    public bool PickupItem(ItemType itemType)
     {
-        switch (itemType)
-        {
-            case ItemType.Crowbar:
-                HasCrowbar = true;
-                break;
-        }
+        if(ItemTypes.Contains(itemType)) return false;
+        ItemTypes.Add(itemType);
+        return true;
     }
 }

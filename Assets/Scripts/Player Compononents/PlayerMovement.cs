@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Move")]
     public float moveSpeed = 20;
     [HideInInspector] public Vector2 moveDir;
+    private Vector3 vel;
     [SerializeField] private float maxForceCoolDown;
 
     [Header("Fall Speed")]
@@ -33,16 +34,22 @@ public class PlayerMovement : MonoBehaviour
     
     public void FixedUpdateMovement()
     {
-        Vector3 force = Vector3.zero;
+        /*
+                Vector3 force = Vector3.zero;
 
-        force = new Vector3(
-            moveDir.x * moveSpeed * Time.fixedDeltaTime,
-            0f,
-            moveDir.y * moveSpeed * Time.fixedDeltaTime
-        );
+                force = new Vector3(
+                    moveDir.x * moveSpeed * Time.fixedDeltaTime,
+                    0f,
+                    moveDir.y * moveSpeed * Time.fixedDeltaTime
+                );
+                rb.MovePosition(transform.position + force);
+        */
 
-        rb.MovePosition(transform.position + force);
-
+        Vector3 move = transform.forward * moveDir.y + transform.right * moveDir.x;
+        vel = (move * moveSpeed * Time.fixedDeltaTime);
+        vel.y = rb.linearVelocity.y;
+        rb.linearVelocity = vel;
+        //rb.AddForce(force);
         LimitFallSpeed();
     }
 

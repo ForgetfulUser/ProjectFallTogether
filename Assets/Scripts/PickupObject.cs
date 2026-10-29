@@ -13,8 +13,8 @@ public class PickupObject : MonoBehaviour
     {
         if(other.GetComponent<Player>() != null)
         {
-            other.GetComponent<Player>().PickupItem(ItemType);
-            Destroy(gameObject);
+           if(other.GetComponent<Player>().PickupItem(ItemType))
+                Destroy(gameObject);
         }
     }
 }
