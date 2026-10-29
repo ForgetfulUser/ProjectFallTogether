@@ -13,6 +13,7 @@ public class DigitalSnare : MonoBehaviour
             Player player = other.GetComponent<Player>();
             player.IsSnared = true;
             player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            player.transform.position = transform.position;
             snaredPlayer = player;
         }
     }
