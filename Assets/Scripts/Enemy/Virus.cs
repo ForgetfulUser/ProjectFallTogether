@@ -212,7 +212,7 @@ public class Virus : MonoBehaviour
 
     bool PatrolCheck()
     {
-        if (ForestPath.Count == 0)
+        if (ForestPath != null)
         {
             ForestPath = VirusManager.GetClosestPath();
             if (ForestPath == null) return false;
