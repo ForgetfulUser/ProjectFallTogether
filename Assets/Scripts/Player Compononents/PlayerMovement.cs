@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     
     public void FixedUpdateMovement()
     {
+        Debug.Log("update movement");
         if (GetComponent<Player>().IsSnared)
         {
             rb.linearVelocity = Vector3.zero;
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.forward * moveDir.y + transform.right * moveDir.x;
         vel = (move * moveSpeed * Time.fixedDeltaTime);
         vel.y = rb.linearVelocity.y;
+        Debug.Log(vel);
         rb.linearVelocity = vel;
         //rb.AddForce(force);
         LimitFallSpeed();
@@ -74,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Interact(InputAction.CallbackContext context)
     {
-        if (player.IsSnared) return;
+        if (player.IsSnared && GameManager.Instance == null) return;
 
         if(player.Snare != null)
         {

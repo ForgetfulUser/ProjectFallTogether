@@ -26,7 +26,6 @@ public class PlayerManager : MonoBehaviour
         {
             if (spawnPos == transform) continue;
             PlayerSpawnPosition.Add(spawnPos.position);
-            //Destroy(spawnPos.gameObject);
         }
         PlayerInputs = MySceneManager.Instance.playerInputs;
         SetPlayers();
@@ -42,9 +41,9 @@ public class PlayerManager : MonoBehaviour
             if (player.IsActive)
             {
                 player.UpdatePlayer();
-                ResetTest(player);
             }
         }
+        if (NoPlayerStanding()) GameManager.Instance.GameOver();
     }
 
     public void FixedUpdateManager()
@@ -56,14 +55,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void ResetTest(Player player)
-    {
-        if(player.transform.position.y <= MinimumFallHeight)
-        {
-            RespawnPlayer(player);
-        }
-    }
-    
     private void SetPlayers()
     {
         int index = 0;
@@ -79,7 +70,7 @@ public class PlayerManager : MonoBehaviour
             index++;
         }
     }
-    
+    /*
     public void RespawnPlayer(Player player)
     {
         if (player.IsActive == false) return;
@@ -95,7 +86,7 @@ public class PlayerManager : MonoBehaviour
 
         player.transform.position = PlayerSpawnPosition[player.PlayerID];
     }
-
+*/
     public bool NoPlayerStanding()
     {
         return ActivePlayers.Count <= 0;

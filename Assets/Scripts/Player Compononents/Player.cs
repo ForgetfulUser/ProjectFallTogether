@@ -15,12 +15,12 @@ public class Player : MonoBehaviour
     [Header("Stats")]
     public int MaxLives;
     [HideInInspector] public int CurrentLives;
+    [HideInInspector] public DigitalSnare Snare;
 
     // Reset Variables
     [HideInInspector] public Vector3 StartPos;
     [HideInInspector] public bool IsActive = true;
 
-    [HideInInspector] public DigitalSnare Snare;
 
     public virtual void StartPlayer(int playerID)
     {

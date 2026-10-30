@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
     protected virtual void Update()
     {
         if (isGameRunning == false) return;
-
         PlayerManager.UpdateManager();
         ObjectManager.UpdateManager();
         VirusManager.UpdateManager();
@@ -68,7 +67,6 @@ public class GameManager : MonoBehaviour
             Seconds = 0;
             Minutes = 0;
         }
-
         /*
                 if (enableDebugReset && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
                 {
@@ -92,8 +90,10 @@ public class GameManager : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        if (isGameRunning == false || isPreGame == true) return;
+        //if (isGameRunning == false || isPreGame == true) return;
+        Debug.Log("running");
         PlayerManager.FixedUpdateManager();
+        Debug.Log("complete");
         //HazardManager.FixedUpdateManager();
     }
 
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
         GameHUDManager.UpdateHUD(Minutes, Seconds);
     }
 
-    protected virtual void GameOver()
+    public virtual void GameOver()
     {
         StartCoroutine(GameOverCoroutine());
     }
