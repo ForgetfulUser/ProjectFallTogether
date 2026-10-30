@@ -83,6 +83,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void Click(InputAction.CallbackContext context)
+    {
+        //GameManager
+    }
+
     private void LimitFallSpeed()
     {
         if (rb.linearVelocity.y <= -maxFallSpeed)

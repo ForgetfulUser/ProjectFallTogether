@@ -10,23 +10,21 @@ public enum VirusState
 {
     Patrol, 
     Detect,
-    Chase,
     Search,
-    Captured
+    Chase,
+    Captured,
+    Attack
 }
 
 public class Virus : MonoBehaviour
 {
-    // Game Manager:
-    //      Landmarks
-
     [Tooltip("Determines the virus' behaviour. Is it chasing? Patroling? Etc...")]
     public VirusState VirusState;
     [Tooltip("How far from the virus is the static/distortion effect?")]
     public float StaticAbilityRadiusEffect;
     public NavMeshAgent NavMeshAgent;
 
-    [Header("Patrol Variable")]
+    [Header("Patrol Variables")]
     [Tooltip("Max time the Virus will spend searching")]
     public float MaxPatrolTime;
     [Tooltip("Min time the Virus will spend searching")]
@@ -77,15 +75,15 @@ public class Virus : MonoBehaviour
     [Tooltip("Thing that Detects the players")]
     public DectionArea DetectionArea;
 
+    [Header("Attack Variables")]
+    [Tooltip("Time between attacks")]
+    public float AttackDelay = 2;
+
     [Header("Snare References")]
     [Tooltip("How close the virus must get before they can snare a player")]
     public float SnareDistance = 8;
     public DigitalSnare DigitalSnare_PRFB;
     public DigitalSnare CurrentSnare;
-
-    [Header("Attack References")]
-    [Tooltip("Time between attacks")]
-    public float AttackDelay = 2;
 
     private float currentStateTime;
     [HideInInspector] public Player DetectedPlayer;
@@ -103,7 +101,7 @@ public class Virus : MonoBehaviour
         {
             currentStateTime -= Time.deltaTime;
         }
-        else
+        else if(VirusState != VirusState.Attack)
         {
             DetermineState();
             if (CurrentCoroutine != null)
@@ -111,8 +109,9 @@ public class Virus : MonoBehaviour
                 StopCoroutine(CurrentCoroutine);
                 CurrentCoroutine = null;
             }
+            
+            if (CurrentCoroutine != null) return;
         }
-        if (CurrentCoroutine != null) return;
 
         // Determine appropiate state
         if(VirusState != VirusState.Detect)
@@ -135,15 +134,23 @@ public class Virus : MonoBehaviour
             case VirusState.Captured:
                 StopNavMeshAgent();
                 break;
+            case VirusState.Attack:
+                Attack();
+                break;
         }
     }
 
     private void DetermineState()
     {
+        if (CurrentCoroutine != null)
+        {
+            StopCoroutine(CurrentCoroutine);
+            CurrentCoroutine = null;
+        }
         if (VirusState == VirusState.Captured || VirusState == VirusState.Chase) return;
-        VirusState = (VirusState)Random.Range(0, 5);
+        VirusState = (VirusState)Random.Range(0, 3);
         if (VirusState == VirusState.Captured || VirusState == VirusState.Chase) VirusState = VirusState.Search;
-
+        VirusState = VirusState.Detect;
         ChangeState();
     }
 
@@ -168,6 +175,13 @@ public class Virus : MonoBehaviour
                 break;
             case VirusState.Captured:
                 StopNavMeshAgent();
+                break;
+            case VirusState.Attack:
+                if (CurrentCoroutine != null)
+                {
+                    StopCoroutine(CurrentCoroutine);
+                    CurrentCoroutine = null;
+                }
                 break;
         }
     }
@@ -240,6 +254,7 @@ public class Virus : MonoBehaviour
 
     public void DetectPlayer(Player player)
     {
+        if(player.CurrentLives <= 0) return;
         if (Vector3.Distance(transform.position, player.transform.position) >= ChaseBreakDistance) return;
         DetectionArea.Players.Clear();
 
@@ -252,14 +267,12 @@ public class Virus : MonoBehaviour
         if(DetectedPlayer != null)
         {
             VirusState = VirusState.Chase;
-
+            ChangeState();
         }
         else
         {
-            // TODO: Have a function to determine VirusState
-
             StopNavMeshAgent();
-            VirusState = VirusState.Patrol;
+            DetermineState();
         }
     }
 
@@ -278,40 +291,50 @@ public class Virus : MonoBehaviour
         if(NavMeshAgent.remainingDistance <= SnareDistance)
         {
             SpawnDigitalSnare();
-            //transform.position = Vector3.zero;
-            //VirusState = VirusState.Search;
+            VirusState = VirusState.Attack;
+            ChangeState();
         }
 
-        if(NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance)
-        {
-            Attack();
-        }
     }
 
     public void SpawnDigitalSnare()
     {
         if(DetectedPlayer == null || CurrentSnare != null || VirusState != VirusState.Chase) return;
 
-        CurrentSnare = Instantiate(DigitalSnare_PRFB, DetectedPlayer.transform.position, Quaternion.identity);
+        if(Vector3.Distance(DetectedPlayer.transform.position, transform.position) <= SnareDistance)
+            CurrentSnare = Instantiate(DigitalSnare_PRFB, DetectedPlayer.transform.position, Quaternion.identity);
 
         //DetectedPlayer = null;
     }
 
     void Attack()
     {
-        if(DetectedPlayer == null || DetectedPlayer.CurrentLives <= 0)
+        if(DetectedPlayer != null && Vector3.Distance(transform.position, DetectedPlayer.transform.position) <= ChaseBreakDistance) 
+            NavMeshAgent.destination = DetectedPlayer.transform.position;
+        else 
+            DetermineState();
+
+        if (NavMeshAgent.remainingDistance >= NavMeshAgent.stoppingDistance) return;
+
+        if (DetectedPlayer == null || DetectedPlayer.CurrentLives <= 0)
         {
             VirusState = VirusState.Search;
-            CurrentCoroutine = null;
+            if (CurrentCoroutine != null)
+            {
+                StopCoroutine(CurrentCoroutine);
+                CurrentCoroutine = null;
+            }
+            if (CurrentSnare != null)
+            {
+                Destroy(CurrentSnare.gameObject);
+                CurrentSnare = null;
+            }
             return;
         }
-        if(CurrentCoroutine != null)
-        {
-            StopCoroutine(CurrentCoroutine);
-            CurrentCoroutine = null;
-        }
-        int amount = 4;
-        DetectedPlayer.GetBopped(amount);
+
+        if (CurrentCoroutine != null) return;
+        Debug.Log("Attack");
+        DetectedPlayer.GetBopped();
         CurrentCoroutine = StartCoroutine(AttackCoroutine());   
     }
 

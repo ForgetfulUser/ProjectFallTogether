@@ -7,6 +7,7 @@ public class PlayerSelectionManager : MonoBehaviour
 {
     //public Transform MenuOptions_TRSFM;
     public GameObject PlayerSelectionCanvas_GO;
+    public Button StartGame_BTN;
     public List<Image> PlayerSelections_IMG = new List<Image>();
     public Dictionary<int, PlayerInput> playerInputs = new Dictionary<int, PlayerInput>(); // Device | Player ID
     public List<int> DeviceIDs = new List<int>();
@@ -35,11 +36,17 @@ public class PlayerSelectionManager : MonoBehaviour
         {
             if (DeviceIDs.Contains(playerInput.devices[i].deviceId)) return;
         }
-
+        StartGame_BTN.Select();
+        StartGame_BTN.image.color = StartGame_BTN.colors.selectedColor;
         PlayerSelections_IMG[currentID].color = Color.green;
         int deviceID = playerInput.devices[0].deviceId;
         playerInputs.Add(deviceID, playerInput);
         DeviceIDs.Add(deviceID);
         currentID++;
+    }
+
+    public void PushStart()
+    {
+
     }
 }

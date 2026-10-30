@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     [Header("Stats")]
     public int MaxLives;
-    [HideInInspector] public int CurrentLives;
+    /*[HideInInspector] */public int CurrentLives;
     [HideInInspector] public DigitalSnare Snare;
 
     // Reset Variables
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
         PlayerMovement.ResetMovement();
     }
 
-    public void GetBopped(int boppedAmount)
+    public void GetBopped()
     {
         CurrentLives--;
     }
