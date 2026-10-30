@@ -5,8 +5,9 @@ public class Keypad : UnlockableObject
 {
     public override bool UnlockCheck()
     {
-        bool unlocked = PlayerManager.NoteCount >= 3;
-        GameManager.Instance.DoorIsUnlocked = unlocked;
+        GameManager instance = GameManager.Instance;
+        bool unlocked = PlayerManager.NoteCount >= 3 && instance.PowerIsOn && instance.BarricadeIsGone;
+        instance.DoorIsUnlocked  = unlocked;
         return unlocked;
     }
 }

@@ -60,32 +60,34 @@ public class GameManager : MonoBehaviour
         PlayerManager.UpdateManager();
         ObjectManager.UpdateManager();
         VirusManager.UpdateManager();
-/*
-        if (enableDebugReset && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
-        {
-            VirusManager.ResetVirus();
-            Debug.Log("Hazards reset.");
-        }
+        CameraManager.UpdateCamera();
 
-        if (WinCheck() != null)
+
+        if (WinCheck())
         {
             Seconds = 0;
             Minutes = 0;
         }
 
-        Seconds -= Time.deltaTime;
-        if (Seconds < 0)
-        {
-            Minutes--;
-            Seconds = 60;
-        }
-        if (Minutes < 0)
-        {
-            isGameRunning = false;
-            GameOver();
-        }
-*/
-        CameraManager.UpdateCamera();
+        /*
+                if (enableDebugReset && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
+                {
+                    VirusManager.ResetVirus();
+                    Debug.Log("Hazards reset.");
+                }
+
+                Seconds -= Time.deltaTime;
+                if (Seconds < 0)
+                {
+                    Minutes--;
+                    Seconds = 60;
+                }
+                if (Minutes < 0)
+                {
+                    isGameRunning = false;
+                    GameOver();
+                }
+        */
     }
 
     protected virtual void FixedUpdate()
@@ -124,6 +126,6 @@ public class GameManager : MonoBehaviour
 
     protected virtual bool WinCheck()
     {
-        return PlayerManager.NoPlayerStanding();
+        return DoorIsUnlocked;
     }
 }
