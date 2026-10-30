@@ -54,32 +54,11 @@ public class GameHUDManager : MonoBehaviour
         }
     }
 
-    public void UpdatePreGameTimer(float timer)
+    public void GameOver(bool noPlayerStanding)
     {
-        return;
-        if (timer < 0)
-        {
-            ReadySetGo_IMG.gameObject.SetActive(false);
-        }
-        else if (timer < 1)
-        {
-            ReadySetGo_IMG.color = Color.green;
-        }
-        else if (timer < 2)
-        {
-            ReadySetGo_IMG.color = Color.yellow;
-        }
-        else if (timer > 2)
-        {
-            ReadySetGo_IMG.color = Color.red;
-        }
-    }
-
-    public void GameOver(int playerIndex)
-    {
-        GameOver_TXT.text = playerIndex > 0 
-            ? "WINNER!!\r\nPlayer " + (playerIndex + 1) + "!!!"
-            : "NO WINNER!!";
+        GameOver_TXT.text = noPlayerStanding 
+            ? "Y'ALL MADE IT!!!"
+            : "THE VIRUS GOT Y'ALL!!";
         GameOver_GO.SetActive(true);
     }
 }

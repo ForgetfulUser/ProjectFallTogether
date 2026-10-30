@@ -6,18 +6,28 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    [Header("Managers")]
     public MySceneManager MySceneManager;
     public PlayerManager PlayerManager;
     public CameraManager CameraManager;
     public VirusManager VirusManager;
     public GameHUDManager GameHUDManager;
+    public ObjectManager ObjectManager;
 
+    [Header("Key Points")]
+    public bool PowerIsOn = false;
+    public bool BarricadeIsGone = false;
+    public bool DoorIsUnlocked = false;
+
+    [Header("Time")]
     public int Minutes;
     private int startMinutes;
     public float Seconds;
     private float preGameTimer = 3f;
     private float preGameTimerMulti = 1.2f;
     private float startSeconds;
+
+    [Header("Gamestate Variables ?")]
     private bool isGameRunning = true;
     private bool isPreGame = true;
     public GameObject SplashScreen;
@@ -38,31 +48,17 @@ public class GameManager : MonoBehaviour
         PlayerManager.StartManager();
         VirusManager.StartManager();
         GameHUDManager.StartHUD(PlayerManager.ActivePlayers);
+        ObjectManager.StartManager();
 
-        if (skipPreGame)
-        {
-            preGameTimer = 0f;
-        }
+        if (SplashScreen) Destroy(SplashScreen);
     }
 
     protected virtual void Update()
     {
-        //TODO: Make a Coroutine to replace the timer. Replace it with: if(isPreGame) return;
-        if (preGameTimer >= 0)
-        {
-            preGameTimer -= Time.deltaTime * preGameTimerMulti;
-
-            if (preGameTimer <= 1f)
-            {
-                isPreGame = false;
-            }
-            GameHUDManager.UpdatePreGameTimer(preGameTimer);
-        }
-
-        if (SplashScreen) Destroy(SplashScreen);
         if (isGameRunning == false) return;
 
         PlayerManager.UpdateManager();
+        ObjectManager.UpdateManager();
         VirusManager.UpdateManager();
 /*
         if (enableDebugReset && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
@@ -112,8 +108,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameOverCoroutine()
     {
         isGameRunning = false;
-        int finalPlayerIndex = PlayerManager.lastPlayerStanding ? PlayerManager.lastPlayerStanding.PlayerID : -1;
-        GameHUDManager.GameOver(finalPlayerIndex);
+        GameHUDManager.GameOver(PlayerManager.NoPlayerStanding());
         yield return new WaitForSeconds(0.7f);
         MySceneManager.Instance.LoadNextScene();
     }
@@ -127,8 +122,8 @@ public class GameManager : MonoBehaviour
         Seconds = startSeconds;
     }
 
-    protected virtual Player WinCheck()
+    protected virtual bool WinCheck()
     {
-        return PlayerManager.LastPlayerStanding();
+        return PlayerManager.NoPlayerStanding();
     }
 }

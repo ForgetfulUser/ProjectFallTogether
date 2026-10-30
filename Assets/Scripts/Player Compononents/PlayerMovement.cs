@@ -65,7 +65,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        Debug.Log("Boop");
         if (GameManager.Instance == false) return;
         if (context.canceled) return;
         if (player.IsSnared) return;

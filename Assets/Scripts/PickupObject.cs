@@ -2,7 +2,9 @@ using UnityEngine;
 
 public enum ItemType
 {
-    Crowbar
+    Crowbar,
+    PowerCell,
+    Note
 }
 
 public class PickupObject : MonoBehaviour

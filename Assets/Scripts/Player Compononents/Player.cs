@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public PlayerManager PlayerManager;
     public PlayerMovement PlayerMovement;
     public PlayerAnimationController PlayerAnimationController;
     public PlayerAttack PlayerAttack;
@@ -20,13 +21,11 @@ public class Player : MonoBehaviour
     [HideInInspector] public Vector3 StartPos;
     [HideInInspector] public bool IsActive = true;
 
-    [Header("Items")]
-    public List<ItemType> ItemTypes = new List<ItemType>();
-
     [HideInInspector] public DigitalSnare Snare;
 
     public virtual void StartPlayer(int playerID)
     {
+        PlayerManager = GameManager.Instance.PlayerManager;
         PlayerMovement.StartMovement();
         PlayerID = playerID;
         PlayerAnimationController.StartAnimation(PlayerID);
@@ -65,8 +64,6 @@ public class Player : MonoBehaviour
 
     public bool PickupItem(ItemType itemType)
     {
-        if(ItemTypes.Contains(itemType)) return false;
-        ItemTypes.Add(itemType);
-        return true;
+        return PlayerManager.PickUpItem(itemType);
     }
 }

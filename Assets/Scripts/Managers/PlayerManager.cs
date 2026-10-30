@@ -12,10 +12,13 @@ public class PlayerManager : MonoBehaviour
     public List<Player> ActivePlayers = new List<Player>();
     public List<Player> InactivePlayers = new List<Player>();
     public float MinimumFallHeight = -10;
-    [Header("Play Test Variables")]
-    public Player TestingPlayer;
     private Dictionary<int, PlayerInput> PlayerInputs = new Dictionary<int, PlayerInput>(); // Device | Player
-    public Player lastPlayerStanding;
+
+    [Header("Items")]
+    public static List<ItemType> ItemTypes = new List<ItemType>();
+    [SerializeField] List<ItemType> ItemTypesList = new List<ItemType>();
+    public static int NoteCount;
+    [SerializeField] int noteCount;
 
     private void Start()
     {
@@ -24,6 +27,8 @@ public class PlayerManager : MonoBehaviour
 
     public void StartManager()
     {
+        ItemTypes = ItemTypesList;
+        NoteCount = noteCount;
         foreach(var spawnPos in GetComponentsInChildren<Transform>())
         {
             if (spawnPos == transform) continue;
@@ -32,43 +37,26 @@ public class PlayerManager : MonoBehaviour
         }
         PlayerInputs = MySceneManager.Instance.playerInputs;
         SetPlayers();
-        if (TestingPlayer) 
-            Player_PRFB.StartPlayer(0);
     }
 
     public void UpdateManager()
     {
-        if (TestingPlayer == null)
+        foreach (var player in ActivePlayers)
         {
-            foreach(var player in ActivePlayers)
+            if (player.IsActive)
             {
-                if (player.IsActive)
-                {
-                    player.UpdatePlayer();
-                    ResetTest(player);
-                }
+                player.UpdatePlayer();
+                ResetTest(player);
             }
-        }
-        else
-        {
-            TestingPlayer.UpdatePlayer();
-            ResetTest(TestingPlayer);
         }
     }
 
     public void FixedUpdateManager()
     {
-        if (TestingPlayer == null)
+        foreach (var player in ActivePlayers)
         {
-            foreach (var player in ActivePlayers)
-            {
-                if(player.IsActive)
-                    player.FixedUpdatePlayer();
-            }
-        }
-        else
-        {
-            TestingPlayer.FixedUpdatePlayer();
+            if (player.IsActive)
+                player.FixedUpdatePlayer();
         }
     }
 
@@ -82,7 +70,6 @@ public class PlayerManager : MonoBehaviour
     
     private void SetPlayers()
     {
-        if (TestingPlayer) return;
         int index = 0;
         foreach(KeyValuePair<int, PlayerInput> pInputs in PlayerInputs)
         {
@@ -113,16 +100,9 @@ public class PlayerManager : MonoBehaviour
         player.transform.position = PlayerSpawnPosition[player.PlayerID];
     }
 
-    public Player LastPlayerStanding()
+    public bool NoPlayerStanding()
     {
-        if (InactivePlayers.Count + 1 < ActivePlayers.Count) return null;
-
-        foreach (Player player in ActivePlayers)
-        {
-            if(InactivePlayers.Contains(player)) continue;
-            lastPlayerStanding = player;
-        }
-        return lastPlayerStanding;
+        return ActivePlayers.Count <= 0;
     }
 
     public void ResetManager()
@@ -136,5 +116,16 @@ public class PlayerManager : MonoBehaviour
             player.transform.position = spawnPos;
             index++;
         }
+    }
+
+    public static bool PickUpItem(ItemType itemType)
+    {
+        if (itemType != ItemType.Note && ItemTypes.Contains(itemType)) return false;
+        if (NoteCount >= 3) return false;
+
+        ItemTypes.Add(itemType);
+        if (itemType == ItemType.Note) NoteCount++;
+
+        return true;
     }
 }
