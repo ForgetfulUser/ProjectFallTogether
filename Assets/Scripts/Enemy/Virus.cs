@@ -150,7 +150,7 @@ public class Virus : MonoBehaviour
         if (VirusState == VirusState.Captured || VirusState == VirusState.Chase) return;
         VirusState = (VirusState)Random.Range(0, 3);
         if (VirusState == VirusState.Captured || VirusState == VirusState.Chase) VirusState = VirusState.Search;
-        VirusState = VirusState.Detect;
+        //VirusState = VirusState.Detect;
         ChangeState();
     }
 
