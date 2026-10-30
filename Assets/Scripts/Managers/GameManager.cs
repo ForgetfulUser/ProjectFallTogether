@@ -91,9 +91,7 @@ public class GameManager : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         //if (isGameRunning == false || isPreGame == true) return;
-        Debug.Log("running");
         PlayerManager.FixedUpdateManager();
-        Debug.Log("complete");
         //HazardManager.FixedUpdateManager();
     }
 
