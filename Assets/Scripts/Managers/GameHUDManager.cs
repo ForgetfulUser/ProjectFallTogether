@@ -16,16 +16,17 @@ public class GameHUDManager : MonoBehaviour
 
     public void StartHUD(List<Player> players)
     {
+        Screen.SetResolution(1920, 1080, true);
         Players = players;
     }
 
     public void UpdateHUD(int minutes, float seconds)
     {
-        Debug.Log("NOT IMPLEMENTED YET");
+        Debug.Log("HUD No Update. Make Tristen fix");
         return;
         UpdateTimer(minutes, seconds);
 
-        UpdatePlayerHealLives();
+        UpdatePlayerLives();
     }
 
     public void UpdateTimer(int minutes, float seconds)
@@ -39,7 +40,7 @@ public class GameHUDManager : MonoBehaviour
         Timer_TXT.text = text;
     }
 
-    public void UpdatePlayerHealLives()
+    public void UpdatePlayerLives()
     {
         for (int i = PlayerLivesSpriteRender.Count - 1;  i >= 0; i--)
         {

@@ -20,15 +20,8 @@ public class PlayerManager : MonoBehaviour
     public static int NoteCount;
     [SerializeField] int noteCount;
 
-    private void Start()
-    {
-        //StartManager();
-    }
-
     public void StartManager()
     {
-        ItemTypes = ItemTypesList;
-        NoteCount = noteCount;
         foreach(var spawnPos in GetComponentsInChildren<Transform>())
         {
             if (spawnPos == transform) continue;
@@ -41,6 +34,9 @@ public class PlayerManager : MonoBehaviour
 
     public void UpdateManager()
     {
+        ItemTypesList = ItemTypes;
+        noteCount = NoteCount;
+
         foreach (var player in ActivePlayers)
         {
             if (player.IsActive)
@@ -120,12 +116,20 @@ public class PlayerManager : MonoBehaviour
 
     public static bool PickUpItem(ItemType itemType)
     {
-        if (itemType != ItemType.Note && ItemTypes.Contains(itemType)) return false;
-        if (NoteCount >= 3) return false;
+        if (ItemTypes.Contains(itemType)) return false;
 
         ItemTypes.Add(itemType);
-        if (itemType == ItemType.Note) NoteCount++;
 
+        return true;
+    }
+
+    public static bool PickUpItem(int noteID)
+    {
+        if (NoteCount >= 3) return false;
+
+        ItemTypes.Add(ItemType.Note);
+        NoteCount++;
+        Debug.Log("Tell the HUD to display the noteID");
         return true;
     }
 }

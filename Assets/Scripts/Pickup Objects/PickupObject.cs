@@ -15,8 +15,13 @@ public class PickupObject : MonoBehaviour
     {
         if(other.GetComponent<Player>() != null)
         {
-           if(other.GetComponent<Player>().PickupItem(ItemType))
-                Destroy(gameObject);
+            PickUp(other.GetComponent<Player>());
         }
+    }
+
+    public virtual void PickUp(Player player)
+    {
+        if (PlayerManager.PickUpItem(ItemType))
+            Destroy(gameObject);
     }
 }

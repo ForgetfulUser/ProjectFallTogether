@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public PlayerManager PlayerManager;
     public PlayerMovement PlayerMovement;
     public PlayerAnimationController PlayerAnimationController;
     public PlayerAttack PlayerAttack;
@@ -25,7 +24,6 @@ public class Player : MonoBehaviour
 
     public virtual void StartPlayer(int playerID)
     {
-        PlayerManager = GameManager.Instance.PlayerManager;
         PlayerMovement.StartMovement();
         PlayerID = playerID;
         PlayerAnimationController.StartAnimation(PlayerID);
@@ -60,10 +58,5 @@ public class Player : MonoBehaviour
     public void GetBopped(int boppedAmount)
     {
         CurrentLives--;
-    }
-
-    public bool PickupItem(ItemType itemType)
-    {
-        return PlayerManager.PickUpItem(itemType);
     }
 }
