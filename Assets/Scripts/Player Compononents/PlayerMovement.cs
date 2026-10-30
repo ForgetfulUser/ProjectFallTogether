@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Interact(InputAction.CallbackContext context)
     {
-        if (player.IsSnared && GameManager.Instance == null) return;
+        if (player == null && GameManager.Instance == null) return;
 
         if(player.Snare != null)
         {

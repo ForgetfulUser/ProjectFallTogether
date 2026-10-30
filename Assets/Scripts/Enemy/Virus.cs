@@ -172,7 +172,7 @@ public class Virus : MonoBehaviour
         }
     }
 
-    private void StopNavMeshAgent()
+    public void StopNavMeshAgent()
     {
         DetectedPlayer = null;
         NavMeshAgent.SetDestination(transform.position);

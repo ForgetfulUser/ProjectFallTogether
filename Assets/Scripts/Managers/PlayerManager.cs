@@ -60,6 +60,7 @@ public class PlayerManager : MonoBehaviour
         int index = 0;
         foreach(KeyValuePair<int, PlayerInput> pInputs in PlayerInputs)
         {
+            pInputs.Value.SwitchCurrentActionMap("Player");
             Player player = pInputs.Value.GetComponent<Player>();
             player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
             Vector3 spawnPos = PlayerSpawnPosition[index];

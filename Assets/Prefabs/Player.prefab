@@ -170,10 +170,9 @@ MonoBehaviour:
   PlayerID: -1
   MaxLives: 3
   CurrentLives: 3
+  Snare: {fileID: 0}
   StartPos: {x: 0, y: 0, z: 0}
   IsActive: 1
-  ItemTypes: 
-  Snare: {fileID: 0}
 --- !u!114 &7948295052948861443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,7 +360,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!54 &5174027390599267562

@@ -23,8 +23,6 @@ public class GameManager : MonoBehaviour
     public int Minutes;
     private int startMinutes;
     public float Seconds;
-    private float preGameTimer = 3f;
-    private float preGameTimerMulti = 1.2f;
     private float startSeconds;
 
     [Header("Gamestate Variables ?")]
@@ -67,30 +65,25 @@ public class GameManager : MonoBehaviour
             Seconds = 0;
             Minutes = 0;
         }
-        /*
-                if (enableDebugReset && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
-                {
-                    VirusManager.ResetVirus();
-                    Debug.Log("Hazards reset.");
-                }
 
-                Seconds -= Time.deltaTime;
-                if (Seconds < 0)
-                {
-                    Minutes--;
-                    Seconds = 60;
-                }
-                if (Minutes < 0)
-                {
-                    isGameRunning = false;
-                    GameOver();
-                }
+        /*
+        Seconds -= Time.deltaTime;
+        if (Seconds < 0)
+        {
+            Minutes--;
+            Seconds = 60;
+        }
+        if (Minutes < 0)
+        {
+            isGameRunning = false;
+            GameOver();
+        }
         */
     }
 
     protected virtual void FixedUpdate()
     {
-        //if (isGameRunning == false || isPreGame == true) return;
+        if (isGameRunning == false) return;
         PlayerManager.FixedUpdateManager();
         //HazardManager.FixedUpdateManager();
     }
@@ -102,6 +95,7 @@ public class GameManager : MonoBehaviour
 
     public virtual void GameOver()
     {
+        VirusManager.Virus.StopNavMeshAgent();
         StartCoroutine(GameOverCoroutine());
     }
 
