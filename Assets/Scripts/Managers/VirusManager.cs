@@ -30,10 +30,10 @@ public class VirusManager : MonoBehaviour
 
     }
 
-    public void GetClosestPathAndPoint(out int closestPathIndex, out int closestPointIndex)
+    public void GetClosestPathAndPoint(Vector3 currentPos, out int closestPathIndex, out int closestPointIndex)
     {
         List<Transform> list = new List<Transform>();
-        float closestDistance = 0;
+        float closestDistance = int.MaxValue;
         int pathIndex = 0;
         closestPathIndex = 0;
         int pointIndex = 0;
@@ -41,47 +41,53 @@ public class VirusManager : MonoBehaviour
 
         foreach(Transform path in ForestPaths)
         {
-            foreach(Transform point in path.GetComponentsInChildren<Transform>())
+            pointIndex = 0;
+            foreach (Transform point in path.GetComponentsInChildren<Transform>())
             {
-                float pointDistance = Vector3.Distance(transform.parent.position, point.position);
+                if (point == path) continue;
+                float pointDistance = Vector3.Distance(currentPos, point.position);
                 if(pointDistance < closestDistance)
                 {
-                    Debug.Log("Path Index: " + pathIndex + " Point Index: " + pointIndex);
                     closestPathIndex = pathIndex;
                     closestPointIndex = pointIndex;
+                    closestDistance = pointDistance;
                 }
                 pointIndex++;
             }
-
-            pointIndex = 0;
             pathIndex++;
         }
     }
-
-    public Transform GetClosestPoint()
+/*
+    public Transform GetClosestPoint(out int pointIndex)
     {
+        pointIndex = 0;
         if (ForestPaths.Count == 0)
         {
             Virus.VirusState = VirusState.Detect;
             return null;
         }
-        GetClosestPathAndPoint(out int path, out int point);
-        return ForestPaths[path].GetComponentsInChildren<Transform>()[point];
+        GetClosestPathAndPoint(out int path, out pointIndex);
+        return ForestPaths[path].GetComponentsInChildren<Transform>()[pointIndex];
     }
-
-    public List<Transform> GetClosestPath()
+*/
+    public List<Transform> GetClosestPath(Vector3 currentPos, out Transform closestPoint, out int closestPointIndex)
     {
+        closestPoint = null;
+        closestPointIndex = 0;
         if (ForestPaths.Count == 0)
         {
             Virus.VirusState = VirusState.Detect;
+            Virus.ChangeState();
             return null;
         }
-        GetClosestPathAndPoint(out int path, out int point);
+        GetClosestPathAndPoint(currentPos, out int path, out closestPointIndex);
         List<Transform> list = new List<Transform>();
         foreach(Transform pointT in ForestPaths[path].GetComponentsInChildren<Transform>())
         {
+            if (pointT == ForestPaths[path]) continue;
             list.Add(pointT);
         }
+        closestPoint = list[closestPointIndex];
         return list;
     }
 }
