@@ -57,10 +57,6 @@ public class Virus : MonoBehaviour
     private bool isSearching;
 
     [Header("Chase Variables")]
-    [Tooltip("Max time the Virus will spend searching")]
-    public float MaxChaseTime;
-    [Tooltip("Min time the Virus will spend searching")]
-    public float MinChaseTime;
     [Tooltip("How far can the player run before the chase stops?")]
     public float ChaseBreakDistance;
     [Tooltip("Distance the Virus will stop while Chasing")]
@@ -106,7 +102,7 @@ public class Virus : MonoBehaviour
         {
             currentStateTime -= Time.deltaTime;
         }
-        else if(VirusState != VirusState.Attack || VirusState != VirusState.Patrol)
+        else if(VirusState != VirusState.Attack || VirusState != VirusState.Patrol || VirusState != VirusState.Chase)
         {
             DetermineState();
             if (CurrentCoroutine != null)
@@ -183,7 +179,6 @@ public class Virus : MonoBehaviour
                 break;
             case VirusState.Chase:
                 NavMeshAgent.stoppingDistance = ChaseStopDistance;
-                currentStateTime = Random.Range(MinChaseTime, MaxChaseTime);
                 break;
             case VirusState.Search:
                 NavMeshAgent.stoppingDistance = PatrolStopDistance;

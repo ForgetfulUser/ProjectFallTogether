@@ -201,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 5174027390599267562}
   animator: {fileID: 3300162807542406708}
-  moveSpeed: 2000
+  moveSpeed: 1000
   moveDir: {x: 0, y: 0}
   maxForceCoolDown: 0
   maxFallSpeed: 18
