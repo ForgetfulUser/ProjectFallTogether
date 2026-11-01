@@ -72,7 +72,7 @@ public class Virus : MonoBehaviour
     [Tooltip("Determines how the detection radius grows per second")]
     public float DetectionGrowRate;
     [Tooltip("Thing that Detects the players")]
-    public DectionArea DetectionArea;
+    public DetectionArea DetectionArea;
 
     [Header("Attack Variables")]
     [Tooltip("Time between attacks")]
@@ -102,15 +102,11 @@ public class Virus : MonoBehaviour
         {
             currentStateTime -= Time.deltaTime;
         }
-        else if(VirusState != VirusState.Attack || VirusState != VirusState.Patrol || VirusState != VirusState.Chase)
+        else if(VirusState== VirusState.Search || VirusState == VirusState.Detect)
         {
+            Debug.Log("Timed Change");
             DetermineState();
-            if (CurrentCoroutine != null)
-            {
-                StopCoroutine(CurrentCoroutine);
-                CurrentCoroutine = null;
-            }
-            
+
             if (CurrentCoroutine != null) return;
         }
 
@@ -264,7 +260,7 @@ public class Virus : MonoBehaviour
         // Uses a detection to attempt locating a player
         Vector3 scaleAmount = new Vector3(DetectionGrowRate, DetectionGrowRate, DetectionGrowRate) * Time.deltaTime;
         DetectionArea.transform.localScale += scaleAmount;
-        foreach(Player player in DetectionArea.Players)
+        foreach(Player player in DetectionArea.DetectedPlayers)
         {
             if(Vector3.Distance(transform.position, player.transform.position) < ChaseBreakDistance)
             {
@@ -278,7 +274,7 @@ public class Virus : MonoBehaviour
     {
         if(player.CurrentLives <= 0) return;
         if (Vector3.Distance(transform.position, player.transform.position) >= ChaseBreakDistance) return;
-        DetectionArea.Players.Clear();
+        DetectionArea.DetectedPlayers.Clear();
 
         if (CurrentCoroutine != null)
         {
@@ -300,16 +296,27 @@ public class Virus : MonoBehaviour
 
     void Chase()
     {
+        // Change targets or change states
+        if (Vector3.Distance(transform.position, DetectedPlayer.transform.position) >= ChaseBreakDistance)
+        {
+            Player nextTarget = DetectionArea.GetNextTarget();
+            if (nextTarget)
+            {
+                DetectedPlayer = nextTarget;
+            }
+            else
+            {
+                StopNavMeshAgent();
+                VirusState = VirusState.Search;
+                ChangeState();
+                return;
+            }
+        }
+
         // Pursue detected player
         NavMeshAgent.destination = DetectedPlayer.transform.position;
 
-        if (Vector3.Distance(transform.position, DetectedPlayer.transform.position) >= ChaseBreakDistance)
-        {
-            StopNavMeshAgent();
-            VirusState = VirusState.Search;
-        }
-
-        if(NavMeshAgent.remainingDistance <= SnareDistance)
+        if (NavMeshAgent.remainingDistance <= SnareDistance)
         {
             SpawnDigitalSnare();
             VirusState = VirusState.Attack;

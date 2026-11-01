@@ -1133,28 +1133,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5595224566946554108, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
-      propertyPath: MaxDetectTime
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5595224566946554108, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
-      propertyPath: MaxPatrolTime
-      value: 2999
-      objectReference: {fileID: 0}
-    - target: {fileID: 5595224566946554108, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
-      propertyPath: MinDetectTime
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5595224566946554108, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
-      propertyPath: MinPatrolTime
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5595224566946554108, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
       propertyPath: SnareDistance
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5595224566946554108, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
+      propertyPath: ChaseBreakDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595224566946554108, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
       propertyPath: PatrolStopDistance
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595224566946554108, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
+      propertyPath: BaseDetectionDistance
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5595224566946554108, guid: 044cf0335b3c2944595be2097bddf493, type: 3}
       propertyPath: PatrollingStopDistance
