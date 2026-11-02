@@ -18,6 +18,7 @@ public enum VirusState
 
 public class Virus : MonoBehaviour
 {
+    public float DistancteToTarget;
     [Tooltip("Determines the virus' behaviour. Is it chasing? Patroling? Etc...")]
     public VirusState VirusState;
     [Tooltip("How far from the virus is the static/distortion effect?")]
@@ -97,6 +98,7 @@ public class Virus : MonoBehaviour
 
     public void UpdateVirus()
     {
+        DistancteToTarget = (NavMeshAgent.remainingDistance);
         if (VirusState == VirusState.Captured) return;
         if (currentStateTime > 0)
         {
@@ -315,7 +317,7 @@ public class Virus : MonoBehaviour
         // Pursue detected player
         NavMeshAgent.destination = DetectedPlayer.transform.position;
 
-        if (NavMeshAgent.remainingDistance <= ChaseStopDistance)
+        if (Vector3.Distance(transform.position, DetectedPlayer.transform.position) <= ChaseStopDistance)
         {
             VirusState = VirusState.Attack;
             ChangeState();

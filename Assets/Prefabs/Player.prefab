@@ -171,7 +171,7 @@ MonoBehaviour:
   PlayerIndex: -1
   MaxLives: 3
   CurrentLives: 3
-  Snare: {fileID: 0}
+  DigitalSnare: {fileID: 0}
   StartPos: {x: 0, y: 0, z: 0}
   IsActive: 1
 --- !u!114 &7948295052948861443
@@ -637,7 +637,7 @@ Animator:
   m_GameObject: {fileID: 4548515550417613773}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 09779063ff91b18409bea16e41bbb33c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 83453a29688b7574492f94b894bbc88c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -747,7 +747,7 @@ Animator:
   m_GameObject: {fileID: 5423662027393560140}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b3b7a4db0050a3c44a6c0a75d2c1530a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2aa065ca812a6ea4987cc51b7925bd88, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -959,7 +959,7 @@ Animator:
   m_GameObject: {fileID: 8805308054114464364}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0db36b9d767a5b746ba4f9bc872a4aa4, type: 2}
+  m_Controller: {fileID: 9100000, guid: c8b4505f6bd63974ea14a73d7951bdf5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
