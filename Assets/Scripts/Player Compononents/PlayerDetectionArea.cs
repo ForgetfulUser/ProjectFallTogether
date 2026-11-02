@@ -7,7 +7,7 @@ public class PlayerDetectionArea : MonoBehaviour
     {
         if (other.GetComponent<DigitalSnare>())
         {
-            Player.Snare = other.GetComponent<DigitalSnare>();
+            Player.DigitalSnare = other.GetComponent<DigitalSnare>();
         }
     }
 
@@ -15,7 +15,7 @@ public class PlayerDetectionArea : MonoBehaviour
     {
         if (other.GetComponent<DigitalSnare>())
         {
-            Player.Snare = null;
+            Player.DigitalSnare = null;
         }
     }
 }

@@ -139,7 +139,6 @@ public class Virus : MonoBehaviour
 
     private void DetermineState()
     {
-        Debug.Log("Determine State");
         if (CurrentCoroutine != null)
         {
             StopCoroutine(CurrentCoroutine);
@@ -316,22 +315,22 @@ public class Virus : MonoBehaviour
         // Pursue detected player
         NavMeshAgent.destination = DetectedPlayer.transform.position;
 
-        if (NavMeshAgent.remainingDistance <= SnareDistance)
+        if (NavMeshAgent.remainingDistance <= ChaseStopDistance)
         {
-            SpawnDigitalSnare();
             VirusState = VirusState.Attack;
             ChangeState();
+            SpawnDigitalSnare();
         }
 
     }
 
     public void SpawnDigitalSnare()
     {
-        if(DetectedPlayer == null || CurrentSnare != null || VirusState != VirusState.Chase) return;
+        if(DetectedPlayer == null || CurrentSnare != null) return;
 
-        if(Vector3.Distance(DetectedPlayer.transform.position, transform.position) <= SnareDistance)
-            CurrentSnare = Instantiate(DigitalSnare_PRFB, DetectedPlayer.transform.position, Quaternion.identity);
-
+        CurrentSnare = Instantiate(DigitalSnare_PRFB, DetectedPlayer.transform);//.position, Quaternion.identity);
+        DetectedPlayer.Snare(CurrentSnare);
+        CurrentSnare.Snare(this, DetectedPlayer);
         //DetectedPlayer = null;
     }
 

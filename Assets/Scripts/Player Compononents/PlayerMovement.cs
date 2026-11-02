@@ -76,10 +76,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (player == null && GameManager.Instance == null) return;
 
-        if(player.Snare != null)
+        if(player.DigitalSnare != null)
         {
-            player.Snare.DestroySnare();
-            player.Snare = null;
+            player.DigitalSnare.DestroySnare();
+            player.DigitalSnare = null;
         }
     }
 

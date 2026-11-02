@@ -22,7 +22,6 @@ public class GameHUDManager : MonoBehaviour
 
     public void UpdateHUD(int minutes, float seconds)
     {
-        Debug.Log("HUD No Update. Make Tristen fix");
         return;
         UpdateTimer(minutes, seconds);
 

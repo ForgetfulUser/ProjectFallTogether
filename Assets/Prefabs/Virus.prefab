@@ -176,7 +176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Virus: {fileID: 5595224566946554108}
-  Players: []
+  DetectedPlayers: []
+  RemovedPlayers: []
 --- !u!1 &4195937032187258196
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,26 +233,25 @@ MonoBehaviour:
   MaxPatrolTime: 5
   MinPatrolTime: 3
   PatrolPauseTime: 3
-  PatrollingStopDistance: 0
+  PatrolStopDistance: 0
+  ShouldLoop: 1
   ForestPath: []
   MaxSearchTime: 5
   MinSearchTime: 3
   MaxSearchDistance: 10
   MinSearchDistance: 15
   SearchTime: 5
-  MaxChaseTime: 5
-  MinChaseTime: 3
   ChaseBreakDistance: 20
-  ChasingStopDistance: 5
+  ChaseStopDistance: 5
   MaxDetectTime: 5
   MinDetectTime: 3
   BaseDetectionDistance: 5
   DetectionGrowRate: 10
   DetectionArea: {fileID: 5784819235140188573}
-  SnareDistance: 8
+  AttackDelay: 2
+  SnareDistance: 20
   DigitalSnare_PRFB: {fileID: 1836804614544725975, guid: 993db79f60d993a44ba168d98ae1f82d, type: 3}
   CurrentSnare: {fileID: 0}
-  AttackDelay: 2
   DetectedPlayer: {fileID: 0}
 --- !u!195 &5500692685358518808
 NavMeshAgent:
@@ -263,7 +263,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -290,12 +290,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &2487542507229264261
 Rigidbody:
   m_ObjectHideFlags: 0

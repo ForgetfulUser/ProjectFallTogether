@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     [Header("Stats")]
     public int MaxLives;
     /*[HideInInspector] */public int CurrentLives;
-    [HideInInspector] public DigitalSnare Snare;
+    [HideInInspector] public DigitalSnare DigitalSnare;
 
     // Reset Variables
     [HideInInspector] public Vector3 StartPos;
@@ -55,6 +55,14 @@ public class Player : MonoBehaviour
     {
         transform.localPosition = StartPos;
         PlayerMovement.ResetMovement();
+    }
+
+    public void Snare(DigitalSnare snare)
+    {
+        IsSnared = true;
+        GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        transform.position = transform.position;
+        DigitalSnare = snare;
     }
 
     public void GetBopped()

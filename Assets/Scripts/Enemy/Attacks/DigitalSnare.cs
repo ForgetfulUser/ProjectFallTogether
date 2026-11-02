@@ -3,7 +3,8 @@ using UnityEngine;
 public class DigitalSnare : MonoBehaviour
 {
     public Virus MyVirus;
-    public Player snaredPlayer;
+    public Player SnaredPlayer;
+/*
     private void OnTriggerEnter(Collider other)
     {
         if (snaredPlayer != null) return;
@@ -11,17 +12,21 @@ public class DigitalSnare : MonoBehaviour
         if(other.GetComponent<Player>() != null)
         {
             Player player = other.GetComponent<Player>();
-            player.IsSnared = true;
-            player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-            player.transform.position = transform.position;
-            snaredPlayer = player;
+            player.Snare(this);
         }
+    }
+*/
+
+    public void Snare(Virus myVirus, Player snaredPlayer)
+    {
+        MyVirus = myVirus;
+        SnaredPlayer = snaredPlayer;
     }
 
     public void DestroySnare()
     {
-        if(snaredPlayer != null) 
-            snaredPlayer.IsSnared = false;
+        if(SnaredPlayer != null) 
+            SnaredPlayer.IsSnared = false;
 
         MyVirus.CurrentSnare = null;
         Destroy(gameObject);

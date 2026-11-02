@@ -168,6 +168,7 @@ MonoBehaviour:
   PlayerAttack: {fileID: 4618139718929486876}
   IsSnared: 0
   PlayerID: -1
+  PlayerIndex: -1
   MaxLives: 3
   CurrentLives: 3
   Snare: {fileID: 0}
@@ -414,8 +415,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.3, z: 1}
-  m_Center: {x: 0, y: 0.21, z: 0}
+  m_Size: {x: 1.97, y: 2.87, z: 1}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &4355742166847284065
 GameObject:
   m_ObjectHideFlags: 0
