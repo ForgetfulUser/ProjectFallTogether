@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     // Player Indicator
     [HideInInspector] public int PlayerID = -1;
+    [HideInInspector] public int PlayerIndex = -1;
 
     [Header("Stats")]
     public int MaxLives;
@@ -22,11 +23,12 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool IsActive = true;
 
 
-    public virtual void StartPlayer(int playerID)
+    public virtual void StartPlayer(int playerID, int playerIndex)
     {
         PlayerMovement.StartMovement();
         PlayerID = playerID;
-        PlayerAnimationController.StartAnimation(PlayerID);
+        PlayerIndex = playerIndex;
+        PlayerAnimationController.StartAnimation(PlayerIndex);
         StartPos = transform.localPosition;
         CurrentLives = MaxLives;
     }

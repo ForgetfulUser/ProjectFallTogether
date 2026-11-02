@@ -1318,6 +1318,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Selection Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 3359394593946754937, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3424535145397511253, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

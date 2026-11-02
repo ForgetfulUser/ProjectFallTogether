@@ -66,7 +66,7 @@ public class PlayerManager : MonoBehaviour
             Vector3 spawnPos = PlayerSpawnPosition[index];
             spawnPos.y += 0.5f;
             player.transform.position = spawnPos;
-            player.StartPlayer(pInputs.Key);
+            player.StartPlayer(pInputs.Key, index);
             ActivePlayers.Add(player);
             index++;
         }

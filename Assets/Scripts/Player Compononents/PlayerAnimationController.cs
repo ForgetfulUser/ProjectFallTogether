@@ -3,14 +3,18 @@ using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
 {
+    public List<GameObject> PlayerSprite_GOs;
     public Animator Animator;
     private Sprite jumpSprite;
     public SpriteRenderer SpriteRenderer;
-    private bool lastJumpVal;
-    private int lastHorzVal;
+    private float lastHorzVal;
 
     public void StartAnimation(int playerIndex)
     {
+        Animator = PlayerSprite_GOs[playerIndex].GetComponent<Animator>();
+        SpriteRenderer = PlayerSprite_GOs[playerIndex].GetComponent<SpriteRenderer>();
+        PlayerSprite_GOs[playerIndex].SetActive(true);
+
 /*
         GameObject decal = null;
         switch (playerIndex)
@@ -46,27 +50,15 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void UpdateAnimation(Vector2 moveDir, bool isPunching)
     {
-        return;
-        int x = Mathf.RoundToInt(moveDir.x);
-        int y = Mathf.RoundToInt(moveDir.y);
-        Animator.SetInteger("Horizontal Movement", x);
-        Animator.SetInteger("Vertical Movement", y);
-        if(x != 0) lastHorzVal = x;
-        Animator.SetBool("Is Punching", isPunching);
-        SpriteRenderer.flipX = (isPunching && lastHorzVal > 0);
-    }
-
-    private void ToggleJump()
-    {
-        lastJumpVal = !lastJumpVal;
-        if(lastJumpVal == true)
+        Animator.SetFloat("Z Direction", moveDir.y);
+        if(moveDir.y != 0) lastHorzVal = moveDir.y;
+        Animator.SetBool("Is Back", lastHorzVal > 0);
+        if (moveDir.x != 0)
         {
-            Animator.StopPlayback();
-            GetComponent<SpriteRenderer>().sprite = jumpSprite;
+            SpriteRenderer.flipX = (moveDir.x < 0);
+            Animator.SetBool("Is Side", true);    
         }
         else
-        {
-            Animator.StartPlayback();
-        }
+            Animator.SetBool("Is Side", false);
     }
 }
