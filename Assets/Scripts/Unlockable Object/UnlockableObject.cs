@@ -38,9 +38,11 @@ public class UnlockableObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Triggered");
         Player player = other.GetComponent<Player>();
         if (player)
         {
+            Debug.Log("Player Found");
             if (players.Contains(player)) return;
             players.Add(player);
         }
@@ -70,6 +72,7 @@ public class UnlockableObject : MonoBehaviour
 
     public virtual void UnlockObject()
     {
+        Debug.Log("Unlocking Object");
         foreach(GameObject go in Activating_GOs)
         {
             go.SetActive(true);

@@ -11,7 +11,8 @@ public class CameraManager : MonoBehaviour
         List<Vector3> playerPositions = new List<Vector3>();
         foreach(var player in GameManager.Instance.PlayerManager.ActivePlayers)
         {
-            playerPositions.Add(player.transform.position);
+            if(player.IsActive)
+                playerPositions.Add(player.transform.position);
         }
         foreach(var playerPos in playerPositions)
         {

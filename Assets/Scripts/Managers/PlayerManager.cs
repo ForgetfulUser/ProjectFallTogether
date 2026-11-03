@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour
     public List<Player> InactivePlayers = new List<Player>();
     public float MinimumFallHeight = -10;
     private Dictionary<int, PlayerInput> PlayerInputs = new Dictionary<int, PlayerInput>(); // Device | Player
-
+    private bool angelSelected;
     [Header("Items")]
     public static List<ItemType> ItemTypes = new List<ItemType>();
     [SerializeField] List<ItemType> ItemTypesList = new List<ItemType>();
@@ -71,6 +71,14 @@ public class PlayerManager : MonoBehaviour
             index++;
         }
     }
+
+    public bool IsAngel()
+    {
+        if (angelSelected) return false;
+        angelSelected = Random.Range(0, 100) < 20;
+        return angelSelected;
+    }
+
     /*
     public void RespawnPlayer(Player player)
     {

@@ -22,11 +22,10 @@ public class FirewallCage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Boo");
         Debug.Log(other.gameObject.name);
         if (other.GetComponent<Virus>())
         {
-            Debug.Log("Got em");
+            other.transform.position = transform.position;
             CapturedVirus = other.GetComponent<Virus>();
             CapturedVirus.ToggleCapture();
         }

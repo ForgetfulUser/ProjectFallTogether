@@ -28,7 +28,11 @@ public class Player : MonoBehaviour
         PlayerMovement.StartMovement();
         PlayerID = playerID;
         PlayerIndex = playerIndex;
-        PlayerAnimationController.StartAnimation(PlayerIndex);
+        if  (GameManager.Instance.PlayerManager.IsAngel())
+            PlayerAnimationController.StartAnimation(4);
+        else
+            PlayerAnimationController.StartAnimation(PlayerIndex);
+
         StartPos = transform.localPosition;
         CurrentLives = MaxLives;
     }

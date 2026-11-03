@@ -26,6 +26,8 @@ public class Virus : MonoBehaviour
     [HideInInspector] public VirusState CurrentVirusState;
     //[Tooltip("How far from the virus is the static/distortion effect?")]
     //public float StaticAbilityRadiusEffect;
+    private float DefaultMoveSpeed;
+    private float DefaultRotSpeed;
 
     [Header("Patrolling")]
     [Tooltip("Max time the Virus will spend searching")]
@@ -64,6 +66,10 @@ public class Virus : MonoBehaviour
     public float ChaseBreakDistance;
     [Tooltip("Distance the Virus will stop while Chasing")]
     public float ChaseStopDistance;
+    [Tooltip("How fast the virus moves")]
+    public float ChaseMoveSpeed;
+    [Tooltip("How fast the virus rotates")]
+    public float ChaseRotSpeed;
 
     [Header("Detection")]
     [Tooltip("Max time the Virus will spend searching")]
@@ -94,6 +100,8 @@ public class Virus : MonoBehaviour
 
     public void StartVirus(VirusManager virusManger)
     {
+        DefaultMoveSpeed = GetComponent<NavMeshAgent>().speed;
+        DefaultRotSpeed = GetComponent<NavMeshAgent>().angularSpeed;
         VirusManager = virusManger;
         ChangeState();
     }
@@ -163,7 +171,9 @@ public class Virus : MonoBehaviour
 
     public void ChangeState()
     {
-        if (CurrentVirusState == VirusState.Chase || CurrentVirusState == VirusState.Attack || CurrentVirusState == VirusState.Detect) CurrentVirusState = VirusState.Search;
+        NavMeshAgent.angularSpeed = DefaultRotSpeed;
+        NavMeshAgent.speed = DefaultMoveSpeed;
+        //if (CurrentVirusState == VirusState.Chase || CurrentVirusState == VirusState.Attack || CurrentVirusState == VirusState.Detect) CurrentVirusState = VirusState.Search;
         ForcedVirusState = CurrentVirusState;
         switch (CurrentVirusState)
         {
@@ -183,6 +193,8 @@ public class Virus : MonoBehaviour
                 currentStateTime = Random.Range(MinDetectTime, MaxDetectTime);
                 break;
             case VirusState.Chase:
+                NavMeshAgent.angularSpeed = ChaseRotSpeed;
+                NavMeshAgent.speed = ChaseMoveSpeed;
                 NavMeshAgent.stoppingDistance = ChaseStopDistance;
                 break;
             case VirusState.Search:
