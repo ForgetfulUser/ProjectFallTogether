@@ -13,12 +13,13 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Vector2 moveDir;
     private Vector3 vel;
     [SerializeField] private float maxForceCoolDown;
+    public PlayerDetectionArea DetectionArea;
+    public AttackBox AttackBox;
 
     [Header("Fall Speed")]
     public float maxFallSpeed = 18;
 
     private Player player;
-    [HideInInspector] public bool didAttack;
 
     public void StartMovement()
     {
@@ -26,10 +27,9 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public void UpdateMovement(out Vector2 moveDir, out bool didAttack)
+    public void UpdateMovement(out Vector2 moveDir)
     {
         moveDir = this.moveDir;
-        didAttack = this.didAttack;
     }
     
     public void FixedUpdateMovement()
@@ -65,21 +65,24 @@ public class PlayerMovement : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
+        Debug.Log("hi");
         if (GameManager.Instance == false) return;
         if (context.canceled) return;
-        if (player.IsSnared) return;
-        didAttack = true;
-        //if (punchingCoroutine == null) { punchingCoroutine = StartCoroutine(PunchingCoroutine()); }
+        if (GetComponent<Player>().IsSnared) return;
+        if (AttackBox.CurrentRoutine == null) AttackBox.HighlightArea();
+        GetComponent<PlayerAttack>().isAttacking = true;
     }
 
     public void Interact(InputAction.CallbackContext context)
     {
-        if (player == null && GameManager.Instance == null) return;
-
-        if(player.DigitalSnare != null)
+        if (GameManager.Instance != null)
         {
-            player.DigitalSnare.DestroySnare();
-            player.DigitalSnare = null;
+            DetectionArea.HighlightArea();
+            if (player.DigitalSnare != null)
+            {
+                player.DigitalSnare.DestroySnare();
+                player.DigitalSnare = null;
+            }
         }
     }
 

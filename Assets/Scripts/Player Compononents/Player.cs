@@ -37,11 +37,11 @@ public class Player : MonoBehaviour
     {
         if (IsSnared) return;
         {
-            PlayerMovement.UpdateMovement(out Vector2 moveDir, out bool isAttacking);
+            PlayerMovement.UpdateMovement(out Vector2 moveDir);
+            PlayerAttack.Attack(moveDir, out bool isAttacking);
 
             PlayerAnimationController.UpdateAnimation(moveDir, isAttacking);
 
-            PlayerAttack.Attack(moveDir, isAttacking);
         }
     }
 

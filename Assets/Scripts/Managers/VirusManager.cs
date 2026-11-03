@@ -76,7 +76,7 @@ public class VirusManager : MonoBehaviour
         closestPointIndex = 0;
         if (ForestPaths.Count == 0)
         {
-            Virus.VirusState = VirusState.Detect;
+            Virus.CurrentVirusState = VirusState.Detect;
             Virus.ChangeState();
             return null;
         }
