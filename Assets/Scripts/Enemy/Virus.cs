@@ -19,6 +19,7 @@ public enum VirusState
 
 public class Virus : MonoBehaviour
 {
+    public float RemainingDistance;
     public NavMeshAgent NavMeshAgent;
     [Tooltip("Forces the virus into a state")]
     public VirusState ForcedVirusState;
@@ -36,6 +37,7 @@ public class Virus : MonoBehaviour
     public float MinPatrolTime;
     [Tooltip("Time the Virus will pause when reaching a point on their Forst Path")]
     public float PatrolPauseTime;
+    private float currentPatrolPauseTime;
     [Tooltip("Distance the Virus will stop while Patrolling")]
     public float PatrolStopDistance;
     [Tooltip("Determines if the virus should loop, or follow a line back to the begininng")]
@@ -100,6 +102,7 @@ public class Virus : MonoBehaviour
 
     public void StartVirus(VirusManager virusManger)
     {
+
         DefaultMoveSpeed = GetComponent<NavMeshAgent>().speed;
         DefaultRotSpeed = GetComponent<NavMeshAgent>().angularSpeed;
         VirusManager = virusManger;
@@ -108,6 +111,7 @@ public class Virus : MonoBehaviour
 
     public void UpdateVirus()
     {
+        RemainingDistance = NavMeshAgent.remainingDistance;
         if(CurrentVirusState != ForcedVirusState)
         {
             CurrentVirusState = ForcedVirusState;
@@ -177,27 +181,28 @@ public class Virus : MonoBehaviour
         ForcedVirusState = CurrentVirusState;
         switch (CurrentVirusState)
         {
-            case VirusState.Patrol:
+            case VirusState.Patrol: // Patrol State
                 isPatrolling = true;
                 NavMeshAgent.stoppingDistance = PatrolStopDistance;
                 ForestPath = VirusManager.GetClosestPath(transform.position, out Transform closestPoint, out pointIndex);
                 if (ForestPath == null) DetermineState();
                 NavMeshAgent.destination = closestPoint.position;
                 patrolForward = true;
-                if(CurrentCoroutine != null) StopCoroutine(CurrentCoroutine); 
-                CurrentCoroutine = StartCoroutine(PatrolToPoint());
+                currentPatrolPauseTime = PatrolPauseTime;
+                //if(CurrentCoroutine != null) StopCoroutine(CurrentCoroutine); 
+                //CurrentCoroutine = StartCoroutine(PatrolToPoint());
                 currentStateTime = Random.Range(MinPatrolTime, MaxPatrolTime);
                 break;
-            case VirusState.Detect:
+            case VirusState.Detect: // Detect State 
                 StopNavMeshAgent();
                 currentStateTime = Random.Range(MinDetectTime, MaxDetectTime);
                 break;
-            case VirusState.Chase:
+            case VirusState.Chase: // Chase State 
                 NavMeshAgent.angularSpeed = ChaseRotSpeed;
                 NavMeshAgent.speed = ChaseMoveSpeed;
                 NavMeshAgent.stoppingDistance = ChaseStopDistance;
                 break;
-            case VirusState.Search:
+            case VirusState.Search: // Search State
                 NavMeshAgent.stoppingDistance = PatrolStopDistance;
                 isSearching = false;
                 currentStateTime = Random.Range(MinSearchTime, MaxSearchTime);
@@ -233,10 +238,15 @@ public class Virus : MonoBehaviour
     void Patrol()
     {
         // Wander Forest Path
-        if (isPatrolling == false)
+        if (NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance)
         {
-            NextPoint();
-            CurrentCoroutine = StartCoroutine(PatrolToPoint());
+            if (currentPatrolPauseTime < 0)
+            {
+                currentPatrolPauseTime = PatrolPauseTime;
+                NextPoint();
+            }
+            else currentPatrolPauseTime -= Time.deltaTime;
+            //CurrentCoroutine = StartCoroutine(PatrolToPoint());
         }
         // Randomly appear new a landmark
     }
@@ -244,7 +254,7 @@ public class Virus : MonoBehaviour
     IEnumerator PatrolToPoint()
     {
         isPatrolling = true;
-        yield return new WaitUntil(() => Vector3.Distance(ForestPath[pointIndex].position, transform.position) <= NavMeshAgent.stoppingDistance);
+        yield return new WaitUntil(() => /*Vector3.Distance(ForestPath[pointIndex].position, transform.position)*/ NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance);
         yield return new WaitForSeconds(PatrolPauseTime);
         isPatrolling = false;
         CurrentCoroutine = null;

@@ -6,26 +6,35 @@ using UnityEngine.UI;
 
 public class GameHUDManager : MonoBehaviour
 {
-    public List<Player> Players = new List<Player>();
-    public List<Sprite> LifeSprites = new List<Sprite>();
-    public List<Image> PlayerLivesSpriteRender = new List<Image>();
+    [Header("Player Lives")]
+    public List<Image> JustinLivesSpriteRender = new List<Image>();
+    public List<Image> LucyLivesSpriteRender = new List<Image>();
+    public List<Image> TristenLivesSpriteRender = new List<Image>();
+    public List<Image> VanessaLivesSpriteRender = new List<Image>();
+
+    private Dictionary<int, List<Image>> allPlayerLives = new Dictionary<int, List<Image>>();
+
     public TMP_Text Timer_TXT;
     public Image ReadySetGo_IMG;
     public GameObject GameOver_GO;
     public TMP_Text GameOver_TXT;
+    private List<Player> players;
 
     public void StartHUD(List<Player> players)
     {
         Screen.SetResolution(1920, 1080, true);
-        Players = players;
+        this.players = players;
+        allPlayerLives.Add(0, JustinLivesSpriteRender);
+        allPlayerLives.Add(1, LucyLivesSpriteRender);
+        allPlayerLives.Add(2, TristenLivesSpriteRender);
+        allPlayerLives.Add(3, VanessaLivesSpriteRender);
     }
 
     public void UpdateHUD(int minutes, float seconds)
     {
-        return;
-        UpdateTimer(minutes, seconds);
+        //UpdateTimer(minutes, seconds);
 
-        UpdatePlayerLives();
+        //UpdatePlayerLives();
     }
 
     public void UpdateTimer(int minutes, float seconds)
@@ -39,18 +48,17 @@ public class GameHUDManager : MonoBehaviour
         Timer_TXT.text = text;
     }
 
-    public void UpdatePlayerLives()
+    public void UpdatePlayerLives(Player player)
     {
-        for (int i = PlayerLivesSpriteRender.Count - 1;  i >= 0; i--)
+        int playerIndex = player.PlayerIndex;
+
+        List<Image> playerLives = this.allPlayerLives[playerIndex];
+        for(int i = 2; i >= 0; i--)
         {
-            if(i >= Players.Count)
+            if(i >= player.CurrentLives)
             {
-                PlayerLivesSpriteRender[i].transform.parent.gameObject.SetActive(false);
-                continue;
+                playerLives[i].color = Color.red;
             }
-            int lifeIndex = Players[i].CurrentLives;
-            if(lifeIndex < 0) lifeIndex = 0;
-            PlayerLivesSpriteRender[i].sprite = LifeSprites[lifeIndex];
         }
     }
 

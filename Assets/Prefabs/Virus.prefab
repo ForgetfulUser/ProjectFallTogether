@@ -229,11 +229,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e857739552bf079409bbe3b0f8640166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistancteToTarget: 0
+  RemainingDistance: 0
+  NavMeshAgent: {fileID: 5500692685358518808}
   ForcedVirusState: 0
   CurrentVirusState: 0
-  StaticAbilityRadiusEffect: 3
-  NavMeshAgent: {fileID: 5500692685358518808}
   MaxPatrolTime: 5
   MinPatrolTime: 3
   PatrolPauseTime: 3
@@ -247,6 +246,8 @@ MonoBehaviour:
   SearchTime: 5
   ChaseBreakDistance: 150
   ChaseStopDistance: 5
+  ChaseMoveSpeed: 15
+  ChaseRotSpeed: 500
   MaxDetectTime: 5
   MinDetectTime: 3
   BaseDetectionDistance: 100
