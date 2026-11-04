@@ -36,8 +36,8 @@ public class PlayerSelectionManager : MonoBehaviour
         {
             if (DeviceIDs.Contains(playerInput.devices[i].deviceId)) return;
         }
-        StartGame_BTN.Select();
-        StartGame_BTN.image.color = StartGame_BTN.colors.selectedColor;
+        //StartGame_BTN.Select();
+        //StartGame_BTN.image.color = StartGame_BTN.colors.selectedColor;
         PlayerSelections_IMG[currentID].color = Color.green;
         int deviceID = playerInput.devices[0].deviceId;
         playerInputs.Add(deviceID, playerInput);
