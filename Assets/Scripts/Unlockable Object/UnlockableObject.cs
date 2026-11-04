@@ -9,10 +9,10 @@ public class UnlockableObject : MonoBehaviour
     public AudioSource AudioSource;
 
     private ObjectManager ObjectManager;
-    private List<Player> players = new List<Player>();
+    protected List<Player> players = new List<Player>();
     private List<Player> removedPlayers = new List<Player>();
     private List<Player> removingPlayers = new List<Player>();
-
+    private bool isUnlocked;
     public void StartObject(ObjectManager objectManager)
     {
         ObjectManager = objectManager;
@@ -72,8 +72,12 @@ public class UnlockableObject : MonoBehaviour
 
     public virtual void UnlockObject()
     {
+        if (isUnlocked) return;
+        else isUnlocked = true;
+
         Debug.Log("Unlocking Object");
-        foreach(GameObject go in Activating_GOs)
+
+        foreach (GameObject go in Activating_GOs)
         {
             go.SetActive(true);
         }

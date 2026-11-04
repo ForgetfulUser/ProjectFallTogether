@@ -23,13 +23,15 @@ public class Player : MonoBehaviour
     [HideInInspector] public Vector3 StartPos;
     [HideInInspector] public bool IsActive = true;
 
-
+    [Tooltip("Is this player's character Angel Nuncio")]
+    public bool IsAngel;
     public virtual void StartPlayer(int playerID, int playerIndex)
     {
         PlayerMovement.StartMovement();
         PlayerID = playerID;
         PlayerIndex = playerIndex;
-        if  (GameManager.Instance.PlayerManager.IsAngel())
+        IsAngel = GameManager.Instance.PlayerManager.IsAngel();
+        if (IsAngel)
             PlayerAnimationController.StartAnimation(4);
         else
             PlayerAnimationController.StartAnimation(PlayerIndex);

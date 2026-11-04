@@ -7,7 +7,7 @@ public class Keypad : UnlockableObject
     {
         Debug.Log("Checking Lock");
         GameManager instance = GameManager.Instance;
-        bool unlocked = PlayerManager.NoteCount >= 3 && instance.PowerIsOn && instance.BarricadeIsGone;
+        bool unlocked = PlayerManager.NoteCount >= 3 && instance.PowerIsOn;
         instance.DoorIsUnlocked  = unlocked;
         Debug.Log("Is Unlocked " + unlocked);
         return unlocked;

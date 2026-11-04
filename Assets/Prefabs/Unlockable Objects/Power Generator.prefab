@@ -216,7 +216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6699422242873711439}
-  - component: {fileID: 1894576644421530734}
+  - component: {fileID: 1239913318506987220}
   - component: {fileID: 548232203663395095}
   m_Layer: 0
   m_Name: Power Generator
@@ -242,7 +242,7 @@ Transform:
   - {fileID: 3869973535351423026}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1894576644421530734
+--- !u!114 &1239913318506987220
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7593968335930282421}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45a06eb538a7f7f48bf5e7e6bb1566c5, type: 3}
+  m_Script: {fileID: 11500000, guid: d084a07ddc9b10c49a13ff49f3831d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1

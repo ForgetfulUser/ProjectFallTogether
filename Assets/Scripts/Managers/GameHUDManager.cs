@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -11,8 +12,14 @@ public class GameHUDManager : MonoBehaviour
     public List<Image> LucyLivesSpriteRender = new List<Image>();
     public List<Image> TristenLivesSpriteRender = new List<Image>();
     public List<Image> VanessaLivesSpriteRender = new List<Image>();
+    public Sprite Angel_SPRT;
+    public List<Image> PlayerIndicator_IMGs;
 
     private Dictionary<int, List<Image>> allPlayerLives = new Dictionary<int, List<Image>>();
+
+    public List<Image> Note_IMGs = new List<Image>();
+    public List<Image> PowerCell_IMGs = new List<Image>();
+    public Image Crowbar_IMG;
 
     public TMP_Text Timer_TXT;
     public Image ReadySetGo_IMG;
@@ -28,6 +35,10 @@ public class GameHUDManager : MonoBehaviour
         allPlayerLives.Add(1, LucyLivesSpriteRender);
         allPlayerLives.Add(2, TristenLivesSpriteRender);
         allPlayerLives.Add(3, VanessaLivesSpriteRender);
+        foreach(Player palyer in players)
+        {
+            if (palyer.IsAngel) PlayerIndicator_IMGs[palyer.PlayerIndex].sprite = Angel_SPRT;
+        }
     }
 
     public void UpdateHUD(int minutes, float seconds)
@@ -60,6 +71,22 @@ public class GameHUDManager : MonoBehaviour
                 playerLives[i].color = Color.red;
             }
         }
+    }
+
+    public void DisplayNote(int noteID)
+    {
+        Note_IMGs[noteID].color = Color.white;
+    }
+
+    public void DisplayPowerCell(bool isBlue)
+    {
+        int cellID = isBlue ? 0 : 1;
+        PowerCell_IMGs[cellID].color = Color.white;
+    }
+
+    public void DisplayCrowbar()
+    {
+        Crowbar_IMG.color = Color.white;
     }
 
     public void GameOver(bool noPlayerStanding)

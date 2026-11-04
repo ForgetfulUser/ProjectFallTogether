@@ -8,6 +8,5 @@ public class Note : PickupObject
     {
         if(PlayerManager.PickUpItem(noteID))
             Destroy(gameObject);
-        
     }
 }

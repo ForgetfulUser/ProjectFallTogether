@@ -19,6 +19,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] List<ItemType> ItemTypesList = new List<ItemType>();
     public static int NoteCount;
     [SerializeField] int noteCount;
+    public static bool HasBluePowerCell;
+    public static bool HasGreenPowerCell;
 
     public void StartManager()
     {
@@ -119,7 +121,7 @@ public class PlayerManager : MonoBehaviour
         if (ItemTypes.Contains(itemType)) return false;
 
         ItemTypes.Add(itemType);
-
+        if (itemType == ItemType.Crowbar) GameManager.Instance.GameHUDManager.DisplayCrowbar();
         return true;
     }
 
@@ -129,7 +131,22 @@ public class PlayerManager : MonoBehaviour
 
         ItemTypes.Add(ItemType.Note);
         NoteCount++;
-        Debug.Log("Tell the HUD to display the noteID");
+        GameManager.Instance.GameHUDManager.DisplayNote(noteID);
         return true;
+    }
+
+    public static bool PickUpItem(bool isBlue)
+    {
+        ItemTypes.Add(ItemType.PowerCell);
+        if (isBlue == true && HasBluePowerCell == false) HasBluePowerCell = true;
+        else if (isBlue == false && HasGreenPowerCell == false) HasGreenPowerCell = true;
+        else return false;
+        GameManager.Instance.GameHUDManager.DisplayPowerCell(isBlue);
+        return true;
+    }
+
+    public static bool HasPowerCells()
+    {
+        return HasBluePowerCell && HasGreenPowerCell;
     }
 }
