@@ -442,8 +442,9 @@ public class Virus : MonoBehaviour
         {
             CurrentCoroutine = null;
             CurrentVirusState = VirusState.Captured;
-            ChangeState();
         }
+        
+        ChangeState();
     }
 
     void StaticAbility()
