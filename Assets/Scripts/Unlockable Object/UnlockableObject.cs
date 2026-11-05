@@ -75,8 +75,6 @@ public class UnlockableObject : MonoBehaviour
         if (isUnlocked) return;
         else isUnlocked = true;
 
-        Debug.Log("Unlocking Object");
-
         foreach (GameObject go in Activating_GOs)
         {
             go.SetActive(true);
