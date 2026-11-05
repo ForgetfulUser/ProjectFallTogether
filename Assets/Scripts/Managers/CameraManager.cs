@@ -17,8 +17,12 @@ public class CameraManager : MonoBehaviour
         foreach(var playerPos in playerPositions)
         {
             followPos += playerPos;
-        } 
-        followPos /= playerPositions.Count;
-        CameraFollow_GO.transform.position = followPos;
+        }
+
+        if (playerPositions.Count > 0)
+        {
+            followPos /= playerPositions.Count;
+            CameraFollow_GO.transform.position = followPos;
+        }
     }
 }

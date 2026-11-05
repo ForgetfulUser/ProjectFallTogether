@@ -74,6 +74,10 @@ public class GameHUDManager : MonoBehaviour
                 playerLives[i].color = Color.red;
             }
         }
+        if(player.CurrentLives <= 0)
+        {
+            PlayerIndicator_IMGs[playerIndex].color = Color.red;
+        }
     }
 
     public void DisplayNote(int noteID)

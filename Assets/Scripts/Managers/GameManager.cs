@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.Video;
 
 
 public class GameManager : MonoBehaviour
@@ -30,6 +32,13 @@ public class GameManager : MonoBehaviour
     private bool isGameRunning = true;
     private bool isPreGame = true;
     public GameObject SplashScreen;
+
+    [Header("Endgame References")]
+    public GameObject PlayerHUD_GO;
+    public Image GameOverFadeIn_IMG; 
+    public VideoPlayer WinCutscene;
+    public VideoPlayer LoseCutscene;
+    
     [Header("Debug")]
     public bool enableDebugReset = true;
     public bool skipPreGame = false;
@@ -90,8 +99,13 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameOverCoroutine()
     {
         isGameRunning = false;
-        GameHUDManager.GameOver(PlayerManager.NoPlayerStanding());
-        yield return new WaitForSeconds(3f);
+        //GameHUDManager.GameOver(PlayerManager.NoPlayerStanding());
+
+        VideoPlayer video = PlayerManager.NoPlayerStanding() ? LoseCutscene : WinCutscene;
+
+        video.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds((float)video.length);
         MySceneManager.Instance.LoadNextScene();
     }
 

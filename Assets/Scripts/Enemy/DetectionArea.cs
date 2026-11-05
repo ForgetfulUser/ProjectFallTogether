@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.InputSystem.Utilities;
 
 public class DetectionArea : MonoBehaviour
@@ -9,26 +10,24 @@ public class DetectionArea : MonoBehaviour
     public List<Player> DetectedPlayers;
     public List<Player> RemovedPlayers;
     bool goingNext;
-    public void UpdateDetectionArea()
-    {
-        if (goingNext) return;
-        for (int i = 0; i < RemovedPlayers.Count; i++)
-        {
-            if (DetectedPlayers[i].name == RemovedPlayers[i].name)
-                DetectedPlayers.Remove(DetectedPlayers[i]);
-        }
-        RemovedPlayers.Clear();
-    }
 
     public Player GetNextTarget()
     {
         goingNext = true;
-        for (int i = 0; i < RemovedPlayers.Count; i++)
+        if (RemovedPlayers.Count > 0 && DetectedPlayers.Count > 0)
         {
-            if(DetectedPlayers[i].name == RemovedPlayers[i].name)
-                DetectedPlayers.Remove(DetectedPlayers[i]);
+            for (int i = 0; i < RemovedPlayers.Count; i++)
+            {
+                if (i >= DetectedPlayers.Count) break;
+
+                if (DetectedPlayers[i] == null)
+                    DetectedPlayers.RemoveAt(i);
+                else if (RemovedPlayers[i] == null) continue;
+                else if (DetectedPlayers[i].name == RemovedPlayers[i].name)
+                    DetectedPlayers.Remove(DetectedPlayers[i]);
+            }
+            RemovedPlayers.Clear();
         }
-        RemovedPlayers.Clear();
 
         float closestDistance = int.MaxValue;
         Player closestPlayer = null;
@@ -51,6 +50,15 @@ public class DetectionArea : MonoBehaviour
         {
             DetectedPlayers.Add(player);
             Virus.DetectPlayer(player);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        Player player = other.GetComponent<Player>();
+        if (player && DetectedPlayers.Contains(player) == false) 
+        {
+            DetectedPlayers.Add(player);
         }
     }
 

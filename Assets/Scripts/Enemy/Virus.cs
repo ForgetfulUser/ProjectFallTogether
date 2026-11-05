@@ -373,6 +373,8 @@ public class Virus : MonoBehaviour
 
         if (DetectedPlayer == null || DetectedPlayer.CurrentLives <= 0)
         {
+            if (DetectedPlayer && DetectedPlayer.CurrentLives <= 0) Destroy(DetectedPlayer);
+            DetectionArea.RemovedPlayers.Add(DetectedPlayer);
             Player nextTarget = DetectionArea.GetNextTarget();
             if (nextTarget)
             {
