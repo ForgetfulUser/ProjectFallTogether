@@ -7,9 +7,17 @@ public enum ItemType
     Note
 }
 
+
+
 public class PickupObject : MonoBehaviour
 {
     public ItemType ItemType;
+    float rotationSpeed = 50;
+
+    private void Update()
+    {
+        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+    }
 
     private void OnTriggerEnter(Collider other)
     {

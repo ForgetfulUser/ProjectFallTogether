@@ -7,7 +7,10 @@ public class PlayerSelectionManager : MonoBehaviour
 {
     //public Transform MenuOptions_TRSFM;
     public GameObject PlayerSelectionCanvas_GO;
+    public GameObject CreditsCanvas_GO;
     public Button StartGame_BTN;
+    public Button CreditBack_BTN;
+    public Color Color;
     public List<Image> PlayerSelections_IMG = new List<Image>();
     public Dictionary<int, PlayerInput> playerInputs = new Dictionary<int, PlayerInput>(); // Device | Player ID
     public List<int> DeviceIDs = new List<int>();
@@ -26,6 +29,11 @@ public class PlayerSelectionManager : MonoBehaviour
         {
             MySceneManager.Instance.LoadTestingScene();
         }
+
+        ColorBlock colorBlock = CreditBack_BTN.colors;
+        colorBlock.selectedColor = Color;
+        CreditBack_BTN.colors = colorBlock;
+        StartGame_BTN.colors = colorBlock;
     }
 
     public void SelectPlayer(PlayerInput playerInput)
@@ -43,8 +51,12 @@ public class PlayerSelectionManager : MonoBehaviour
         currentID++;
     }
 
-    public void PushStart()
+    public void ToggleCredits()
     {
-
+        bool isCurrentlyCredits = CreditsCanvas_GO.activeSelf;
+        PlayerSelectionCanvas_GO.SetActive(isCurrentlyCredits);
+        CreditsCanvas_GO.SetActive(!isCurrentlyCredits);
+        if (isCurrentlyCredits) StartGame_BTN.Select();
+        else CreditBack_BTN.Select();
     }
 }
