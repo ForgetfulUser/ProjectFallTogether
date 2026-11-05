@@ -23,9 +23,12 @@ public class GameHUDManager : MonoBehaviour
 
     public TMP_Text Timer_TXT;
     public Image ReadySetGo_IMG;
+    private List<Player> players;
+
+    [Header("Game Over")]
     public GameObject GameOver_GO;
     public TMP_Text GameOver_TXT;
-    private List<Player> players;
+
 
     public void StartHUD(List<Player> players)
     {

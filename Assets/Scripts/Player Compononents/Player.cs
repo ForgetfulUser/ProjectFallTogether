@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
     public virtual void ResetPlayer()
     {
         transform.localPosition = StartPos;
+        CurrentLives = MaxLives = 0;
         PlayerMovement.ResetMovement();
     }
 
@@ -75,6 +76,8 @@ public class Player : MonoBehaviour
     public void GetBopped()
     {
         CurrentLives--;
+        if(CurrentLives <= 0) IsActive = false;
         GameManager.Instance.GameHUDManager.UpdatePlayerLives(this);
+        GameManager.Instance.PlayerManager.UpdatePlayerLives(this);
     }
 }

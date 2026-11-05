@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using TMPro;
 using TMPro.Examples;
 using System.Text.RegularExpressions;
+using UnityEditor;
 
 public enum VirusState
 {
@@ -212,7 +213,6 @@ public class Virus : MonoBehaviour
                 //Capture();
                 break;
             case VirusState.Attack:
-                
                 if (CurrentCoroutine != null)
                 {
                     StopCoroutine(CurrentCoroutine);
@@ -378,17 +378,28 @@ public class Virus : MonoBehaviour
 
         if (DetectedPlayer == null || DetectedPlayer.CurrentLives <= 0)
         {
-            CurrentVirusState = VirusState.Search;
-            if (CurrentCoroutine != null)
+            Player nextTarget = DetectionArea.GetNextTarget();
+            if (nextTarget)
             {
-                StopCoroutine(CurrentCoroutine);
-                CurrentCoroutine = null;
+                DetectedPlayer = nextTarget;
+                NavMeshAgent.destination = DetectedPlayer.transform.position;
+                CurrentVirusState = VirusState.Chase;
             }
-            if (CurrentSnare != null)
+            else
             {
-                Destroy(CurrentSnare.gameObject);
-                CurrentSnare = null;
+                CurrentVirusState = VirusState.Search;
+                if (CurrentCoroutine != null)
+                {
+                    StopCoroutine(CurrentCoroutine);
+                    CurrentCoroutine = null;
+                }
+                if (CurrentSnare != null)
+                {
+                    Destroy(CurrentSnare.gameObject);
+                    CurrentSnare = null;
+                }
             }
+            ChangeState();
             return;
         }
 

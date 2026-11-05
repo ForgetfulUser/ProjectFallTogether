@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public bool PowerIsOn = false;
     public bool BarricadeIsGone = false;
     public bool DoorIsUnlocked = false;
+    public bool DoorIsOpen = false;
 
     [Header("Time")]
     public int Minutes;
@@ -60,25 +61,10 @@ public class GameManager : MonoBehaviour
         CameraManager.UpdateCamera();
 
 
-        if (WinCheck())
+        if (WinCheck() || PlayerManager.ActivePlayers.Count == 0)
         {
-            Seconds = 0;
-            Minutes = 0;
-        }
-
-        /*
-        Seconds -= Time.deltaTime;
-        if (Seconds < 0)
-        {
-            Minutes--;
-            Seconds = 60;
-        }
-        if (Minutes < 0)
-        {
-            isGameRunning = false;
             GameOver();
         }
-        */
     }
 
     protected virtual void FixedUpdate()
@@ -90,11 +76,13 @@ public class GameManager : MonoBehaviour
 
     protected virtual void LateUpdate()
     {
+        if (isGameRunning == false) return;
         GameHUDManager.UpdateHUD(Minutes, Seconds);
     }
 
     public virtual void GameOver()
     {
+        isGameRunning = false;
         VirusManager.Virus.StopNavMeshAgent();
         StartCoroutine(GameOverCoroutine());
     }
@@ -103,7 +91,7 @@ public class GameManager : MonoBehaviour
     {
         isGameRunning = false;
         GameHUDManager.GameOver(PlayerManager.NoPlayerStanding());
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(3f);
         MySceneManager.Instance.LoadNextScene();
     }
 
@@ -118,6 +106,6 @@ public class GameManager : MonoBehaviour
 
     protected virtual bool WinCheck()
     {
-        return DoorIsUnlocked;
+        return DoorIsOpen;
     }
 }

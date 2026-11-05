@@ -44,6 +44,17 @@ public class PlayerManager : MonoBehaviour
             {
                 player.UpdatePlayer();
             }
+            else
+            {
+                InactivePlayers.Add(player);
+            }
+        }
+        foreach(Player player in InactivePlayers)
+        {
+            if(ActivePlayers.Contains(player))
+            {
+                ActivePlayers.Remove(player);
+            }
         }
         if (NoPlayerStanding()) GameManager.Instance.GameOver();
     }
@@ -114,6 +125,13 @@ public class PlayerManager : MonoBehaviour
             player.transform.position = spawnPos;
             index++;
         }
+    }
+
+    public void UpdatePlayerLives(Player player)
+    {
+        if(player.CurrentLives >= 0) return;
+        ActivePlayers.Remove(player);
+        InactivePlayers.Add(player);
     }
 
     public static bool PickUpItem(ItemType itemType)

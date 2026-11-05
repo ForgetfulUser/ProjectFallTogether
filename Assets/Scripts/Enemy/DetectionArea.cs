@@ -8,13 +8,25 @@ public class DetectionArea : MonoBehaviour
     public Virus Virus;
     public List<Player> DetectedPlayers;
     public List<Player> RemovedPlayers;
+    bool goingNext;
+    public void UpdateDetectionArea()
+    {
+        if (goingNext) return;
+        for (int i = 0; i < RemovedPlayers.Count; i++)
+        {
+            if (DetectedPlayers[i].name == RemovedPlayers[i].name)
+                DetectedPlayers.Remove(DetectedPlayers[i]);
+        }
+        RemovedPlayers.Clear();
+    }
 
     public Player GetNextTarget()
     {
-        foreach(Player player in RemovedPlayers)
+        goingNext = true;
+        for (int i = 0; i < RemovedPlayers.Count; i++)
         {
-            if(DetectedPlayers.Contains(player))
-                DetectedPlayers.Remove(player);
+            if(DetectedPlayers[i].name == RemovedPlayers[i].name)
+                DetectedPlayers.Remove(DetectedPlayers[i]);
         }
         RemovedPlayers.Clear();
 
@@ -28,6 +40,7 @@ public class DetectionArea : MonoBehaviour
                 closestPlayer = player;
             }
         }
+        goingNext = false;
         return closestPlayer;
     }
 
