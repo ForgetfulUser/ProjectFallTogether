@@ -2978,7 +2978,7 @@ MonoBehaviour:
   - {fileID: 2912616102886619621}
   - {fileID: 6388415592178021047}
   - {fileID: 2422255411829820092}
-  Angel_SPRT: {fileID: 803751670, guid: 01d041468dd62b941887c1aea3f4d8e2, type: 3}
+  Angel_SPRT: {fileID: 21300000, guid: c7931bb41dfb16b4fad3d4cf77ed066a, type: 3}
   PlayerIndicator_IMGs:
   - {fileID: 4599629217092679459}
   - {fileID: 2819247495254309907}
