@@ -6312,6 +6312,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3105554178519326786, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3105554178519326786, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3105554178519326786, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3105554178519326786, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3359394593946754937, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
       propertyPath: m_Name
       value: Player Selection Manager
@@ -6329,6 +6345,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3424535145397511253, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919463926538618714, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919463926538618714, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919463926538618714, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919463926538618714, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -12996,6 +13028,74 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1215263352829926172, guid: b55aa1b82b5fb2140b82556015f4afea, type: 3}
   m_PrefabInstance: {fileID: 1157977784}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1181118021
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1181118023}
+  - component: {fileID: 1181118022}
+  m_Layer: 0
+  m_Name: Introcutscene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!328 &1181118022
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181118021}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: e5d54ba7b300c454e9652fd45224a689, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 1323504231}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 1
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_TimeUpdateMode: 1
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
+--- !u!4 &1181118023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181118021}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 40.3, z: 27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1182119906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13282,6 +13382,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b55aa1b82b5fb2140b82556015f4afea, type: 3}
+--- !u!114 &1193611370 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 307594545950177274, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+  m_PrefabInstance: {fileID: 550008992}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b653503380d8684e8399df88d673f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1194296465 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1215263352829926172, guid: b55aa1b82b5fb2140b82556015f4afea, type: 3}
@@ -15506,6 +15617,11 @@ Transform:
   - {fileID: 491558845}
   m_Father: {fileID: 28531020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1344055414 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1539899230833320700, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+  m_PrefabInstance: {fileID: 550008992}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1346625828
 GameObject:
   m_ObjectHideFlags: 0
@@ -18899,6 +19015,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1215263352829926172, guid: b55aa1b82b5fb2140b82556015f4afea, type: 3}
   m_PrefabInstance: {fileID: 1830840183}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1650932635 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7252071197025113292, guid: daf4e008c727e1b46afe2c210d9cd850, type: 3}
+  m_PrefabInstance: {fileID: 550008992}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1656924885 stripped
 Transform:
@@ -23618,6 +23739,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6acd9598ae81c43b7ad6b38f85ce64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Video_GO: {fileID: 1181118021}
+  PlayerSelectionManager: {fileID: 1193611370}
+  fadeDuration: 1.7
+  TipScreen_GO: {fileID: 1650932635}
+  StartScreen_GO: {fileID: 1344055414}
   sceneIndex: 0
   GameManager_PRFB: {fileID: 84943000}
 --- !u!4 &2006159885
@@ -25211,3 +25337,4 @@ SceneRoots:
   - {fileID: 1900142569}
   - {fileID: 556570957}
   - {fileID: 1732283438}
+  - {fileID: 1181118023}

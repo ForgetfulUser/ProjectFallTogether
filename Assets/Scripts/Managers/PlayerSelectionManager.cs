@@ -25,8 +25,6 @@ public class PlayerSelectionManager : MonoBehaviour
         else
         {
             MySceneManager.Instance.LoadTestingScene();
-            Destroy(PlayerSelectionCanvas_GO);
-            Destroy(gameObject);
         }
     }
 

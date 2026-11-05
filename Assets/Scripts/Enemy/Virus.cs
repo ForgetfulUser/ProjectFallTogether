@@ -1,12 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using TMPro;
-using TMPro.Examples;
-using System.Text.RegularExpressions;
-using UnityEditor;
 
 public enum VirusState
 {
