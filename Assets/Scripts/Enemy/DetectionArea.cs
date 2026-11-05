@@ -49,7 +49,8 @@ public class DetectionArea : MonoBehaviour
         if (player && DetectedPlayers.Contains(player) == false) 
         {
             DetectedPlayers.Add(player);
-            Virus.DetectPlayer(player);
+            if(Virus.DetectedPlayer == null)
+                Virus.DetectPlayer(player);
         }
     }
 

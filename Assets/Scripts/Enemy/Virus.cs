@@ -15,8 +15,8 @@ public enum VirusState
 
 public class Virus : MonoBehaviour
 {
-    public float RemainingDistance;
     public NavMeshAgent NavMeshAgent;
+    public Animator Animator;
     [Tooltip("Forces the virus into a state")]
     public VirusState ForcedVirusState;
     // Determines the virus' behaviour. Is it chasing? Patroling? Etc...
@@ -87,7 +87,7 @@ public class Virus : MonoBehaviour
 
     [Header("Snare")]
     [Tooltip("How close the virus must get before they can snare a player")]
-    public float SnareDistance = 8;
+    //public float SnareDistance = 8;
     public DigitalSnare DigitalSnare_PRFB;
     public DigitalSnare CurrentSnare;
 
@@ -107,7 +107,6 @@ public class Virus : MonoBehaviour
 
     public void UpdateVirus()
     {
-        RemainingDistance = NavMeshAgent.remainingDistance;
         if(CurrentVirusState != ForcedVirusState)
         {
             CurrentVirusState = ForcedVirusState;
@@ -163,9 +162,6 @@ public class Virus : MonoBehaviour
 
         if (CurrentVirusState == VirusState.Captured || CurrentVirusState == VirusState.Chase) return;
         CurrentVirusState = (VirusState)Random.Range(0, 3);
-        //if ((CurrentVirusState == VirusState.Captured || CurrentVirusState == VirusState.Chase) && CurrentVirusState != VirusState.Captured) CurrentVirusState = VirusState.Search;
-        //VirusState = VirusState.Patrol;
-        
         ChangeState();
     }
 
@@ -173,11 +169,14 @@ public class Virus : MonoBehaviour
     {
         NavMeshAgent.angularSpeed = DefaultRotSpeed;
         NavMeshAgent.speed = DefaultMoveSpeed;
-        //if (CurrentVirusState == VirusState.Chase || CurrentVirusState == VirusState.Attack || CurrentVirusState == VirusState.Detect) CurrentVirusState = VirusState.Search;
+        Animator.SetBool("IsMoving", false);
+        Animator.SetBool("IsAttacking", false);
+        Animator.SetBool("IsCaptured", false);
         ForcedVirusState = CurrentVirusState;
         switch (CurrentVirusState)
         {
             case VirusState.Patrol: // Patrol State
+                Animator.SetBool("IsMoving", true);
                 isPatrolling = true;
                 NavMeshAgent.stoppingDistance = PatrolStopDistance;
                 ForestPath = VirusManager.GetClosestPath(transform.position, out Transform closestPoint, out pointIndex);
@@ -185,8 +184,6 @@ public class Virus : MonoBehaviour
                 NavMeshAgent.destination = closestPoint.position;
                 patrolForward = true;
                 currentPatrolPauseTime = PatrolPauseTime;
-                //if(CurrentCoroutine != null) StopCoroutine(CurrentCoroutine); 
-                //CurrentCoroutine = StartCoroutine(PatrolToPoint());
                 currentStateTime = Random.Range(MinPatrolTime, MaxPatrolTime);
                 break;
             case VirusState.Detect: // Detect State 
@@ -194,6 +191,7 @@ public class Virus : MonoBehaviour
                 currentStateTime = Random.Range(MinDetectTime, MaxDetectTime);
                 break;
             case VirusState.Chase: // Chase State 
+                Animator.SetBool("IsMoving", true);
                 NavMeshAgent.angularSpeed = ChaseRotSpeed;
                 NavMeshAgent.speed = ChaseMoveSpeed;
                 NavMeshAgent.stoppingDistance = ChaseStopDistance;
@@ -204,6 +202,7 @@ public class Virus : MonoBehaviour
                 currentStateTime = Random.Range(MinSearchTime, MaxSearchTime);
                 break;
             case VirusState.Captured:
+                Animator.SetBool("IsCaptured", true);
                 StopNavMeshAgent();
                 //Capture();
                 break;
@@ -225,6 +224,7 @@ public class Virus : MonoBehaviour
             Destroy(CurrentSnare.gameObject);
             CurrentSnare = null;
         }
+        NavMeshAgent.velocity = Vector3.zero;
         NavMeshAgent.SetDestination(transform.position);
         NavMeshAgent.isStopped = true;
         NavMeshAgent.ResetPath();
@@ -235,25 +235,18 @@ public class Virus : MonoBehaviour
         // Wander Forest Path
         if (NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance)
         {
+            Animator.SetBool("IsMoving", currentPatrolPauseTime < 0);
             if (currentPatrolPauseTime < 0)
             {
                 currentPatrolPauseTime = PatrolPauseTime;
                 NextPoint();
             }
-            else currentPatrolPauseTime -= Time.deltaTime;
-            //CurrentCoroutine = StartCoroutine(PatrolToPoint());
+            else
+            {
+                currentPatrolPauseTime -= Time.deltaTime;
+            }
         }
         // Randomly appear new a landmark
-    }
-
-    IEnumerator PatrolToPoint()
-    {
-        isPatrolling = true;
-        yield return new WaitUntil(() => /*Vector3.Distance(ForestPath[pointIndex].position, transform.position)*/ NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance);
-        yield return new WaitForSeconds(PatrolPauseTime);
-        isPatrolling = false;
-        CurrentCoroutine = null;
-
     }
 
     void NextPoint()
@@ -364,7 +357,7 @@ public class Virus : MonoBehaviour
 
     void Attack()
     {
-        if(DetectedPlayer != null && Vector3.Distance(transform.position, DetectedPlayer.transform.position) <= ChaseBreakDistance) 
+        if (DetectedPlayer != null && Vector3.Distance(transform.position, DetectedPlayer.transform.position) <= ChaseBreakDistance) 
             NavMeshAgent.destination = DetectedPlayer.transform.position;
         else 
             DetermineState();
@@ -402,16 +395,19 @@ public class Virus : MonoBehaviour
 
         if (CurrentCoroutine != null) return;
         Debug.Log("Attack");
-        DetectedPlayer.GetBopped();
         CurrentCoroutine = StartCoroutine(AttackCoroutine());   
     }
 
     IEnumerator AttackCoroutine()
     {
-        yield return new WaitForSeconds(AttackDelay);
+        Animator.SetBool("IsAttacking", true);
+        yield return new WaitForSeconds(Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length - 1.8f);
+        DetectedPlayer.GetBopped();
+        yield return new WaitForSeconds(3f);
         CurrentCoroutine = null;
         if (Vector3.Distance(DetectedPlayer.transform.position, transform.position) <= NavMeshAgent.stoppingDistance && CurrentVirusState == VirusState.Chase)
             Attack();
+        Animator.SetBool("IsAttacking", false);
         yield return null;
     }
 
@@ -449,6 +445,7 @@ public class Virus : MonoBehaviour
         else
         {
             CurrentCoroutine = null;
+            StopNavMeshAgent();
             CurrentVirusState = VirusState.Captured;
         }
         

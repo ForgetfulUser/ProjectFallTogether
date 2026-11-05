@@ -12,11 +12,19 @@ public class PlayerSelectionManager : MonoBehaviour
     public Button CreditBack_BTN;
     public Color Color;
     public List<Image> PlayerSelections_IMG = new List<Image>();
+    public List<Image> PlayerProfile_IMG = new List<Image>();
     public Dictionary<int, PlayerInput> playerInputs = new Dictionary<int, PlayerInput>(); // Device | Player ID
     public List<int> DeviceIDs = new List<int>();
     private int currentID;
     [Tooltip("Set this to true if you're playtesting.")]
     public bool IsTesting;
+    private void Start()
+    {
+        ColorBlock colorBlock = CreditBack_BTN.colors;
+        colorBlock.selectedColor = Color;
+        CreditBack_BTN.colors = colorBlock;
+        StartGame_BTN.colors = colorBlock;
+    }
 
     public void StartGame()
     {
@@ -29,11 +37,6 @@ public class PlayerSelectionManager : MonoBehaviour
         {
             MySceneManager.Instance.LoadTestingScene();
         }
-
-        ColorBlock colorBlock = CreditBack_BTN.colors;
-        colorBlock.selectedColor = Color;
-        CreditBack_BTN.colors = colorBlock;
-        StartGame_BTN.colors = colorBlock;
     }
 
     public void SelectPlayer(PlayerInput playerInput)
@@ -45,6 +48,7 @@ public class PlayerSelectionManager : MonoBehaviour
         //StartGame_BTN.Select();
         //StartGame_BTN.image.color = StartGame_BTN.colors.selectedColor;
         PlayerSelections_IMG[currentID].color = Color.green;
+        PlayerProfile_IMG[currentID].color = Color.white;
         int deviceID = playerInput.devices[0].deviceId;
         playerInputs.Add(deviceID, playerInput);
         DeviceIDs.Add(deviceID);

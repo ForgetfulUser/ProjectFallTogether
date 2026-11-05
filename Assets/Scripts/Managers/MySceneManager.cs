@@ -12,6 +12,7 @@ public class MySceneManager : MonoBehaviour
     [SerializeField] private float fadeDuration = 1.0f;
     public GameObject TipScreen_GO;
     public GameObject StartScreen_GO;
+    public GameObject Background_Go;
     public static MySceneManager Instance { get; private set; }
     //public List<int> PlayerIDs = new List<int>();
     public Dictionary<int, PlayerInput> playerInputs = new Dictionary<int, PlayerInput>(); // Device | Player Input
@@ -75,6 +76,8 @@ public class MySceneManager : MonoBehaviour
     {
         // Play Vid
         StartScreen_GO.SetActive(false);
+        Background_Go.SetActive(false);
+ 
         Video_GO.SetActive(true);
         double duration = Video_GO.GetComponent<VideoPlayer>().length;
         yield return new WaitForSeconds((float)duration);

@@ -53,7 +53,7 @@ public class PlayerAnimationController : MonoBehaviour
         Animator.SetFloat("Z Direction", moveDir.y);
         if(moveDir.y != 0) lastHorzVal = moveDir.y;
         Animator.SetBool("Is Back", lastHorzVal > 0);
-        if (moveDir.x != 0)
+        if (moveDir.x < -0.2 || moveDir.x > 0.2)
         {
             SpriteRenderer.flipX = (moveDir.x < 0);
             Animator.SetBool("Is Side", true);    
