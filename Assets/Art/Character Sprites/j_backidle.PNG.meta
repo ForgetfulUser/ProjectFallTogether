@@ -173,12 +173,56 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: j_backidle_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 280
+        height: 310
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90a0ea24a345b7740b4d69edce0796cb
+      internalID: 1489291643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: j_backidle_1
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 0
+        width: 280
+        height: 290
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac932226a52af9f4fbacca4c0f2de841
+      internalID: 811188907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: aa729c10befed274db86f7e0424ad51f
     internalID: 0
     vertices: []
     indices: 
@@ -187,7 +231,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      j_backidle_0: 1489291643
+      j_backidle_1: 811188907
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

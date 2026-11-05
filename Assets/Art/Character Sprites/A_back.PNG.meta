@@ -173,12 +173,56 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: A_back_0
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 0
+        width: 210
+        height: 310
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a780aef932bab74bb95f430fe71291f
+      internalID: -282366077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A_back_1
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 0
+        width: 210
+        height: 310
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7bcef7ea30ea5447bb4d16b0644ac99
+      internalID: -869307504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e1bc29e0fe02f394982893eb334ae3b3
     internalID: 0
     vertices: []
     indices: 
@@ -187,7 +231,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      A_back_0: -282366077
+      A_back_1: -869307504
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

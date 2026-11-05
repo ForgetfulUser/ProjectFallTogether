@@ -173,12 +173,56 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: A_idle_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 280
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 263d577d18f1f474582579f0dbf464d5
+      internalID: -1584758449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: A_idle_1
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 0
+        width: 280
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df1b0df510affd748a11b03433d3c2b2
+      internalID: 1192565155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: dcb749a80ab126145b8be89c281365bd
     internalID: 0
     vertices: []
     indices: 
@@ -187,7 +231,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      A_idle_0: -1584758449
+      A_idle_1: 1192565155
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
