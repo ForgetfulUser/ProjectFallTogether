@@ -84,6 +84,8 @@ public class Virus : MonoBehaviour
     [Header("Attack")]
     [Tooltip("Time between attacks")]
     public float AttackDelay = 2;
+    [Tooltip("Spawns on itself when it tries to attack Angel's character")]
+    public FirewallCage FirewallCage;
 
     [Header("Snare")]
     [Tooltip("How close the virus must get before they can snare a player")]

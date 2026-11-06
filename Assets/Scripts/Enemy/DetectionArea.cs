@@ -43,7 +43,7 @@ public class DetectionArea : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Player player = other.GetComponent<Player>();
-        if (player && DetectedPlayers.Contains(player) == false) 
+        if (player && DetectedPlayers.Contains(player) == false && player.IsAngel == false) 
         {
             DetectedPlayers.Add(player);
             if(Virus.DetectedPlayer == null)
@@ -54,7 +54,7 @@ public class DetectionArea : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         Player player = other.GetComponent<Player>();
-        if (player && DetectedPlayers.Contains(player) == false) 
+        if (player && DetectedPlayers.Contains(player) == false && player.IsAngel == false) 
         {
             DetectedPlayers.Add(player);
         }
