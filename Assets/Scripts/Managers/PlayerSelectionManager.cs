@@ -9,6 +9,7 @@ public class PlayerSelectionManager : MonoBehaviour
     public GameObject PlayerSelectionCanvas_GO;
     public GameObject CreditsCanvas_GO;
     public Button StartGame_BTN;
+    public Button Credit_BTN;
     public Button CreditBack_BTN;
     public Color Color;
     public List<Image> PlayerSelections_IMG = new List<Image>();
@@ -23,6 +24,7 @@ public class PlayerSelectionManager : MonoBehaviour
         ColorBlock colorBlock = CreditBack_BTN.colors;
         colorBlock.selectedColor = Color;
         CreditBack_BTN.colors = colorBlock;
+        Credit_BTN.colors = colorBlock;
         StartGame_BTN.colors = colorBlock;
     }
 

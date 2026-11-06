@@ -41,7 +41,7 @@ public class MySceneManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -64,6 +64,7 @@ public class MySceneManager : MonoBehaviour
         isLoading = true;
         sceneIndex++;
         if (sceneIndex >= SceneManager.sceneCountInBuildSettings) sceneIndex = 0;
+        playerInputs.Clear();
         SceneManager.LoadScene(sceneIndex);
     }
 

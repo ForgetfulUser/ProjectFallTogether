@@ -206,12 +206,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 3
     m_ConditionEvent: Z Direction
     m_EventTreshold: 0
-  - m_ConditionMode: 4
-    m_ConditionEvent: X Direction
-    m_EventTreshold: 0.2
-  - m_ConditionMode: 3
-    m_ConditionEvent: X Direction
-    m_EventTreshold: -0.2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7550536592576882215}
   m_Solo: 0
@@ -240,12 +234,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: Is Side
     m_EventTreshold: 0
-  - m_ConditionMode: 3
-    m_ConditionEvent: X Direction
-    m_EventTreshold: -0.2
-  - m_ConditionMode: 4
-    m_ConditionEvent: X Direction
-    m_EventTreshold: 0.2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2006322042402172301}
   m_Solo: 0
@@ -482,12 +470,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 4
     m_ConditionEvent: Z Direction
     m_EventTreshold: 0.1
-  - m_ConditionMode: 3
-    m_ConditionEvent: X Direction
-    m_EventTreshold: -0.2
-  - m_ConditionMode: 4
-    m_ConditionEvent: X Direction
-    m_EventTreshold: 0.2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1767568284363647068}
   m_Solo: 0
@@ -623,12 +605,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 3
     m_ConditionEvent: Z Direction
     m_EventTreshold: -0.1
-  - m_ConditionMode: 4
-    m_ConditionEvent: X Direction
-    m_EventTreshold: 0.2
-  - m_ConditionMode: 3
-    m_ConditionEvent: X Direction
-    m_EventTreshold: -0.2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8264471575757396258}
   m_Solo: 0
