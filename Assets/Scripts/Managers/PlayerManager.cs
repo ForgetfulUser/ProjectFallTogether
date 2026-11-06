@@ -88,7 +88,7 @@ public class PlayerManager : MonoBehaviour
     public bool IsAngel()
     {
         if (angelSelected) return false;
-        angelSelected = Random.Range(0, 100) < 200;
+        angelSelected = Random.Range(0, 100) < 50;
         return angelSelected;
     }
 
